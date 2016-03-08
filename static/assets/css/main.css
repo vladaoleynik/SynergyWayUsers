@@ -130,7 +130,8 @@ body {
 
 .dark-table>tbody>tr>th,
 .dark-table>thead>tr>th {
-    padding: 1em 2em;
+    padding: 0.5em 2em;
+    line-height: 2;
 }
 
 .dark-table tbody {
@@ -146,11 +147,99 @@ body {
     font-weight: 600;
 }
 
+/*** buttons ***/
+.input-group-btn {
+    font-size: 1em;
+}
+
+.btn-circle {
+    color: #ffffff;
+    display: inline-block;
+    width: 1.8rem;
+    height: 1.8rem;
+    text-align: center;
+    line-height: 1.8rem;
+    font-size: 1em;
+    vertical-align: middle;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    cursor: pointer;
+    transition: 0.3s all;
+    border: none;
+    box-shadow: 0 1px 2px rgba(104, 102, 112, 0.5);
+    text-shadow: 1px 1px 3px rgba(104, 102, 112, 0.6);
+}
+
+.btn-circle:hover {
+    color: #ffffff;
+}
+
+.btn-circle.btn-lg {
+    width: 3rem;
+    height: 3rem;
+    padding: 0.6em;
+    font-size: 1.4rem;
+    line-height: 1.4rem;
+}
+
+.btn-circle.btn-md {
+    width: 2.3rem;
+    height: 2.3rem;
+    padding: 0.6em;
+    font-size: 1rem;
+    line-height: 1rem;
+}
+
+.btn-red {
+    background-color: #ff2228;
+}
+
+.btn-green {
+    background-color: #34c97c;
+}
+
+.btn-red:hover {
+    background-color: #CC1B20;
+}
+
+.btn-green:hover {
+    background-color: #27965D;
+}
+
+/*** inputs ***/
+
+.input-group-btn button {
+    margin-right: 0;
+}
+
+.input-group .circle-input {
+
+}
+
+.user-header {
+    text-align: center;
+}
+
+.user-list .user-header {
+    margin-top: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.user .status-inactive {
+    color: #ff2228;
+}
+
+.user .status-active {
+    color: #34c97c;
+}
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */
 
-
+.inline-block {
+    display: inline-block!important;
+}
 
 /* ==========================================================================
    EXAMPLE Media Queries for Responsive Design.
