@@ -4,7 +4,8 @@
 
   angular
     .module('synergyWayUsers', [
-      'ui.router'
+      'ui.router',
+      'ui.bootstrap'
     ])
     .config([
       appConfig
