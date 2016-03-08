@@ -85,6 +85,10 @@ body {
     font-family: 'Open Sans', 'SansSerif';
 }
 
+:focus {
+    outline: none;
+}
+
 .title {
     margin-top: 2.5rem;
     margin-bottom: 2rem;
@@ -148,10 +152,6 @@ body {
 }
 
 /*** buttons ***/
-.input-group-btn {
-    font-size: 1em;
-}
-
 .btn-circle {
     color: #ffffff;
     display: inline-block;
@@ -206,30 +206,64 @@ body {
     background-color: #27965D;
 }
 
-/*** inputs ***/
-
-.input-group-btn button {
-    margin-right: 0;
+.splitted-btn {
+    z-index: 100;
+    position: relative;
 }
 
-.input-group .circle-input {
+/*** inputs ***/
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: #ffffff url('../img/dropdown-arrow.png') no-repeat 80% 50%!important;
+    background-size: 15px 12px!important;
+    text-indent: 0.01px;
+    text-overflow: "";
+    color: #1455a2;
+    padding: 0 1em!important;
+}
 
+.rounded-input,
+.form-control:focus {
+    border: none;
+    box-shadow: 0 1px 4px rgba(104, 102, 112, 0.2);
+    border-radius: 2rem;
+}
+
+.splitted-input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding-left: 3.5rem;
+}
+
+.btn-md~.splitted-input {
+    height: 2.3rem;
 }
 
 .user-header {
     text-align: center;
-}
-
-.user-list .user-header {
-    margin-top: 2.5rem;
+    margin-top: 3.7rem;
     margin-bottom: 2rem;
 }
 
-.user .status-inactive {
+.user-header .search-form .form-control {
+    width: inherit;
+}
+
+.user-header .search-form {
+    position: relative;
+}
+
+.user-header .title {
+    margin: 0;
+}
+
+.text-danger {
     color: #ff2228;
 }
 
-.user .status-active {
+.text-success {
     color: #34c97c;
 }
 
@@ -249,6 +283,26 @@ body {
 
 @media only screen and (min-width: 35em) {
     /* Style adjustments for viewports that meet the condition */
+}
+
+@media only screen and (max-width: 768px) {
+    .user-header .title {
+        margin-top: 2rem;
+    }
+
+    .user-header .search-form {
+        width: 89%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .user-header .title {
+        margin-top: 2rem;
+    }
+
+    .user-header .search-form {
+        width: 89%;
+    }
 }
 
 @media print,
