@@ -97,6 +97,9 @@ a:focus {
 
 /*** layout ***/
 
+.content {
+    padding: 2.5rem 0;
+}
 
 .user-list {
   margin-bottom: 5.7rem;
@@ -117,8 +120,11 @@ a:focus {
 
 .user-header {
     text-align: center;
-    margin-top: 3.7rem;
     margin-bottom: 2rem;
+}
+
+.user-header .title {
+    margin-bottom: 0;
 }
 
 .user-header .search-form .form-control {
@@ -127,10 +133,6 @@ a:focus {
 
 .user-header .search-form {
     position: relative;
-}
-
-.user-header .title {
-    margin: 0;
 }
 
 /*** typography ***/
@@ -144,9 +146,24 @@ a:focus {
 }
 
 .title {
-    margin-top: 2.5rem;
+    margin-top: 0;
     margin-bottom: 2rem;
     font-weight: 600;
+}
+
+.text-alert {
+    margin-right: 1rem;
+    border: 1px solid;
+    background-color: #ffffff;
+    text-align: center;
+    font-size: 1em;
+    padding: 0.5em 1.5em;
+    border-radius: 2em;
+}
+
+.text-alert.alert-success {
+    border-color: #34c97c;
+    color: #34c97c;
 }
 
 /*** navbar ***/
@@ -209,22 +226,26 @@ a:focus {
 }
 
 /*** buttons ***/
-.btn-circle {
-    color: #ffffff;
-    display: inline-block;
-    width: 1.8rem;
-    height: 1.8rem;
+.btn {
     text-align: center;
-    line-height: 1.8rem;
     font-size: 1em;
-    vertical-align: middle;
-    border-radius: 50%;
-    margin-right: 0.5rem;
+    padding: 0.5em 1.5em;
+    border-radius: 2em;
     cursor: pointer;
     transition: 0.3s all;
     border: none;
     box-shadow: 0 1px 2px rgba(104, 102, 112, 0.5);
     text-shadow: 1px 1px 3px rgba(104, 102, 112, 0.6);
+}
+
+.btn-circle {
+    width: 1.8rem;
+    height: 1.8rem;
+    line-height: 1.8rem;
+    vertical-align: middle;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    padding: 0;
 }
 
 .btn-circle:hover,
@@ -256,12 +277,23 @@ a:focus {
     background-color: #34c97c;
 }
 
-.btn-red:hover {
+.btn-red:hover,
+.btn-red:focus {
     background-color: #CC1B20;
 }
 
-.btn-green:hover {
+.btn-green:hover,
+.btn-green:focus {
     background-color: #27965D;
+}
+
+.btn-red,
+.btn-red:hover,
+.btn-red:focus,
+.btn-green,
+.btn-green:hover,
+.btn-green:focus {
+    color: #ffffff;
 }
 
 .splitted-btn {
@@ -280,6 +312,11 @@ select {
     text-overflow: "";
     color: #1455a2;
     padding: 0 1em!important;
+}
+
+.form-group.required label:before {
+   content:"*";
+   color:red;
 }
 
 .rounded-input,

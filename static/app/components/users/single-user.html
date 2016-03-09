@@ -1,10 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<div class="pull-right">
+    <span class="text-alert alert-success">User created successfully</span>
+</div>
+<div class="container clearfix">
+    <div class="col-sm-2">
+        <a class="btn btn-circle btn-md btn-red" href="#users">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+        </a>
+    </div>
+    <div class="col-md-5 col-md-offset-2 col-sm-8">
+        <h2 class="title text-uppercase text-center">Create user</h2>
+        <form class="clearfix" name="userForm" novalidate>
+            <div class="form-group required" ng-class="{ 'has-error': userForm.username.$touched && userForm.username.$invalid }">
+                <label for="userName">Name</label>
+                <input type="text"
+                       name="username"
+                       autofocus
+                       required
+                       class="form-control rounded-input"
+                       id="userName"
+                       maxlength="50">
+            </div>
+            <div class="form-group required">
+                <label for="userEmail">E-mail</label>
+                <input type="email"
+                       name="email"
+                       required
+                       class="form-control rounded-input"
+                       id="userEmail">
+            </div>
+            <div class="form-group">
+                <label for="userPhone">Phone</label>
+                <input type="tel"
+                       name="phone"
+                       required
+                       class="form-control rounded-input"
+                       id="userPhone">
+            </div>
+            <div class="form-group">
+                <label for="userMobile">Mobile phone</label>
+                <input type="tel"
+                       required
+                       name="mobile"
+                       class="form-control rounded-input"
+                       id="userMobile">
+            </div>
+            <div class="form-group">
+                <label for="userStatus">Status</label>
+                <select id="userStatus"
+                        name="status"
+                        class="rounded-input form-control">
+                    <option>Active</option>
+                    <option selected>Inactive</option>
+                </select>
+            </div>
+            <input class="btn btn-green pull-right"
+                   type="submit"
+                   value="Create"/>
+        </form>
+    </div>
+</div>
