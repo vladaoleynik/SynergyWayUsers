@@ -20,7 +20,7 @@
                 <div class="inline-block col-sm-3">
                     <h2 class="title text-uppercase text-center">Users</h2>
                 </div>
-                <div class="hidden-xs col-sm-2 col-sm-offset-1">
+                <div class="hidden-xs col-sm-2 col-sm-offset-2">
                     <select class="form-control rounded-input">
                         <option>10</option>
                         <option selected>15</option>
@@ -53,10 +53,10 @@
                         <tr class="user">
                             <th>Gary Busey</th>
                             <th>busey@mail.com</th>
-                            <th class="text-success">Active</th>
+                            <th class="text-danger">Inactive</th>
                             <th>
-                                <a class="btn-circle btn-green"><i class="glyphicon glyphicon-pencil"></i></a>
-                                <a class="btn-circle btn-red"><i class="glyphicon glyphicon glyphicon-trash"></i></a>
+                                <a class="btn-circle btn-green default-button"><i class="glyphicon glyphicon-pencil"></i></a>
+                                <a class="btn-circle btn-red default-button"><i class="glyphicon glyphicon glyphicon-trash"></i></a>
                             </th>
                         </tr>
                     </tbody>
@@ -64,7 +64,7 @@
             </div>
             <uib-pagination total-items="vm.totalItems"
                             ng-model="vm.currentPage"
-                            class="rounded-pagination center-block"
+                            class="rounded-pagination center-block sticky sticky-pagination"
                             previous-text="&lsaquo;"
                             next-text="&rsaquo;">
             </uib-pagination>

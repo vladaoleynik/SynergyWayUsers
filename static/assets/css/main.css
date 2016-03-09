@@ -80,6 +80,11 @@ textarea {
 /* ==========================================================================
    Custom styles
    ========================================================================== */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
     background-color: #F1F1F1;
     font-family: 'Open Sans', 'SansSerif';
@@ -90,13 +95,62 @@ a:focus {
     outline: none;
 }
 
+/*** layout ***/
+
+
+.user-list {
+  margin-bottom: 5.7rem;
+}
+
+.sticky {
+  position: absolute;
+  bottom: 0;
+  height: 4rem;
+  background-color: #f5f5f5;
+}
+
+.user-list .sticky-pagination {
+    height: 4.3rem;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.user-header {
+    text-align: center;
+    margin-top: 3.7rem;
+    margin-bottom: 2rem;
+}
+
+.user-header .search-form .form-control {
+    width: inherit;
+}
+
+.user-header .search-form {
+    position: relative;
+}
+
+.user-header .title {
+    margin: 0;
+}
+
+/*** typography ***/
+
+.text-danger {
+    color: #ff2228;
+}
+
+.text-success {
+    color: #34c97c;
+}
+
 .title {
     margin-top: 2.5rem;
     margin-bottom: 2rem;
     font-weight: 600;
 }
 
-/*** Navbar ***/
+/*** navbar ***/
+
 .navbar {
     min-height: initial;
 }
@@ -122,6 +176,8 @@ a:focus {
 .navbar-inverse .navbar-nav>li>a {
     padding: 10px 15px;
 }
+
+/*** tables ***/
 
 .dark-table {
     box-shadow: 0 2px 10px rgba(104, 102, 112, 0.2);
@@ -214,6 +270,7 @@ a:focus {
 }
 
 /*** inputs ***/
+
 select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -243,39 +300,14 @@ select {
     height: 2.3rem;
 }
 
-.user-header {
-    text-align: center;
-    margin-top: 3.7rem;
-    margin-bottom: 2rem;
-}
-
-.user-header .search-form .form-control {
-    width: inherit;
-}
-
-.user-header .search-form {
-    position: relative;
-}
-
-.user-header .title {
-    margin: 0;
-}
-
-.text-danger {
-    color: #ff2228;
-}
-
-.text-success {
-    color: #34c97c;
-}
-
 /*** pagination ***/
+
 .rounded-pagination {
     text-align: center;
 }
 
 .rounded-pagination>li>a {
-    color: #c9c9c9;
+    color: rgb(104, 102, 112);
     display: inline-block;
     width: 1.8rem;
     height: 1.8rem;
