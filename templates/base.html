@@ -8,12 +8,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>{% block title %}{% endblock title %}</title>
+    <title></title>
 
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {% block styles %}
     <!-- fonts -->
     <link href='https://fonts.googleapis.com/css?family=Just+Another+Hand' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
@@ -24,7 +23,6 @@
     <link rel="stylesheet" href="/static/assets/bower_components/angular-bootstrap/ui-bootstrap-csp.css">
     <link rel="stylesheet" href="/static/assets/css/main.css">
     <script src="/static/assets/bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
-    {% endblock styles %}
 </head>
 <body>
     <!--[if lt IE 7]>
@@ -46,17 +44,16 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="main-navbar">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{% url 'user-list' %}">Users</a></li>
-                        <li><a href="{% url 'course-list' %}">Courses</a></li>
+                        <li><a href="#users">Users</a></li>
+                        <li><a href="#courses">Courses</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container -->
         </nav>
     </header>
 
-    {% block content %}{% endblock content %}
+    <div ui-view></div>
 
-    {% block scripts %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="/static/assets/bower_components/angular/angular.js"></script>
@@ -64,6 +61,8 @@
     <script src="/static/assets/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script src="/static/assets/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="/static/app/app.module.js"></script>
-    {% endblock scripts %}
+    <script src="/static/app/app.routes.js"></script>
+
+    <script src="/static/app/components/users/UserController.js"></script>
 </body>
 </html>

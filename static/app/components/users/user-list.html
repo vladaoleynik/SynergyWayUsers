@@ -1,0 +1,68 @@
+<div class="user-list" ng-controller="UserController as vm">
+    <div class="user-header">
+        <div class="container">
+            <div class="col-sm-5 text-left">
+                <a href="#" class="btn-circle btn-md btn-red">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </a>
+                <form class="inline-block search-form">
+                    <button class="inline-block btn-circle btn-md splitted-btn btn-green" type="submit">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                    <input type="text" class="inline-block rounded-input input-md splitted-input form-control" placeholder="Search for...">
+                </form>
+            </div>
+            <div class="inline-block col-sm-3">
+                <h2 class="title text-uppercase text-center">Users</h2>
+            </div>
+            <div class="hidden-xs col-sm-2 col-sm-offset-2">
+                <select class="form-control rounded-input">
+                    <option>10</option>
+                    <option selected>15</option>
+                    <option>20</option>
+                </select>
+            </div>
+        </div>
+    </div><!-- /.row -->
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table dark-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>E-mail</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="user">
+                        <th>Gary Busey</th>
+                        <th>busey@mail.com</th>
+                        <th class="text-danger">Inactive</th>
+                        <th>
+                            <a class="btn-circle btn-green default-button"><i class="glyphicon glyphicon-pencil"></i></a>
+                            <a class="btn-circle btn-red default-button"><i class="glyphicon glyphicon glyphicon-trash"></i></a>
+                        </th>
+                    </tr>
+                    <tr class="user">
+                        <th>Gary Busey</th>
+                        <th>busey@mail.com</th>
+                        <th class="text-danger">Inactive</th>
+                        <th>
+                            <a class="btn-circle btn-green default-button"><i class="glyphicon glyphicon-pencil"></i></a>
+                            <a class="btn-circle btn-red default-button"><i class="glyphicon glyphicon glyphicon-trash"></i></a>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <uib-pagination total-items="vm.totalItems"
+                        ng-model="vm.currentPage"
+                        class="rounded-pagination center-block sticky sticky-pagination"
+                        previous-text="&lsaquo;"
+                        next-text="&rsaquo;">
+        </uib-pagination>
+    </div>
+
+</div>

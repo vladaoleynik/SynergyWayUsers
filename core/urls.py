@@ -16,14 +16,8 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import include, url
-from django.views.generic import RedirectView
-
-import courses.urls
-import users.urls
+from django.views.generic import TemplateView
 
 urlpatterns = [
-    # url(r'^admin/', admin.site.urls),
-    url(r'^$', RedirectView.as_view(pattern_name='user-list', permanent=False), name='index'),
-    url(r'^users/', include(users.urls)),
-    url(r'^courses/', include(courses.urls)),
+    url(r'^$', TemplateView.as_view(template_name='base.html'), name='index'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
