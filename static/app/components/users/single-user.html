@@ -10,44 +10,59 @@
     <div class="col-md-5 col-md-offset-2 col-sm-8">
         <h2 class="title text-uppercase text-center">Create user</h2>
         <form class="clearfix" name="userForm" novalidate>
-            <div class="form-group required" ng-class="{ 'has-error': userForm.username.$touched && userForm.username.$invalid }">
+            <div class="form-group required has-feedback"
+                 ng-class="{ 'has-error': userForm.$submitted && userForm.username.$invalid }">
                 <label for="userName">Name</label>
                 <input type="text"
                        name="username"
+                       ng-model="vm.model.username"
                        autofocus
                        required
                        class="form-control rounded-input"
                        id="userName"
                        maxlength="50">
+                <i class="glyphicon glyphicon-exclamation-sign form-control-feedback"></i>
             </div>
-            <div class="form-group required">
+            <div class="form-group required has-feedback"
+                 ng-class="{ 'has-error': userForm.$submitted && userForm.email.$invalid }">
                 <label for="userEmail">E-mail</label>
                 <input type="email"
                        name="email"
+                       ng-model="vm.model.email"
                        required
                        class="form-control rounded-input"
                        id="userEmail">
+                <i class="glyphicon glyphicon-exclamation-sign form-control-feedback"></i>
             </div>
-            <div class="form-group">
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error': userForm.$submitted && userForm.phone.$invalid }">
                 <label for="userPhone">Phone</label>
                 <input type="tel"
                        name="phone"
-                       required
+                       ng-model="vm.model.phone"
+                       ui-mask="+ 9?9 999 999 99 99"
+                       ui-mask-placeholder-char="space"
                        class="form-control rounded-input"
                        id="userPhone">
+                <i class="glyphicon glyphicon-exclamation-sign form-control-feedback"></i>
             </div>
-            <div class="form-group">
+            <div class="form-group has-feedback"
+                 ng-class="{ 'has-error': userForm.$submitted && userForm.mobile.$invalid }">
                 <label for="userMobile">Mobile phone</label>
                 <input type="tel"
-                       required
                        name="mobile"
+                       ui-mask="+ 9?9 999 999 99 99"
+                       ui-mask-placeholder-char="space"
+                       ng-model="vm.model.mobile"
                        class="form-control rounded-input"
                        id="userMobile">
+                <i class="glyphicon glyphicon-exclamation-sign form-control-feedback"></i>
             </div>
             <div class="form-group">
                 <label for="userStatus">Status</label>
                 <select id="userStatus"
                         name="status"
+                        ng-model="vm.model.status"
                         class="rounded-input form-control">
                     <option>Active</option>
                     <option selected>Inactive</option>

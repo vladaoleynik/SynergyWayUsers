@@ -10,6 +10,7 @@
   function UserController() {
     var vm = this;
 
+    vm.model = undefined;
     vm.totalItems = 50;
     vm.currentPage = 1;
 

@@ -314,9 +314,22 @@ select {
     padding: 0 1em!important;
 }
 
+.has-feedback .form-control-feedback {
+    display: none;
+}
+
+.has-feedback.has-error .form-control-feedback {
+    display: inline-block;
+}
+
+.form-group.has-error input,
+.has-feedback.has-error .form-control-feedback {
+    color: #ff2228;
+}
+
 .form-group.required label:before {
-   content:"*";
-   color:red;
+   content: "*";
+   color: #ff2228;
 }
 
 .rounded-input,
