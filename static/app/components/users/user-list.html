@@ -1,4 +1,4 @@
-<div class="user-list" ng-controller="UserController as vm">
+<div class="user-list-block" ng-controller="UserController as vm">
     <div class="user-header">
         <div class="container">
             <div class="col-sm-5 text-left">
@@ -16,11 +16,13 @@
                 <h2 class="title text-uppercase text-center">Users</h2>
             </div>
             <div class="hidden-xs col-sm-2 col-sm-offset-2">
-                <select class="form-control rounded-input">
-                    <option>10</option>
-                    <option selected>15</option>
-                    <option>20</option>
-                </select>
+                <label class="custom-select">
+                    <select class="form-control rounded-input">
+                        <option>10</option>
+                        <option selected>15</option>
+                        <option>20</option>
+                    </select>
+                </label>
             </div>
         </div>
     </div><!-- /.row -->

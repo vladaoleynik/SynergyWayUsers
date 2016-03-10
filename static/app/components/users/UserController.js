@@ -5,12 +5,15 @@
     .module('synergyWayUsers')
     .controller('UserController', UserController);
 
-  UserController.$inject = [];
+  UserController.$inject = ['$scope'];
 
-  function UserController() {
+  function UserController($scope) {
     var vm = this;
 
-    vm.model = undefined;
+    $scope.model = {
+      status: 0
+    };
+
     vm.totalItems = 50;
     vm.currentPage = 1;
 

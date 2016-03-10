@@ -6,7 +6,8 @@
     .module('synergyWayUsers', [
       'ui.router',
       'ui.bootstrap',
-      'ui.mask'
+      'ui.mask',
+      'ngMessages'
     ])
     .config([
       appConfig
