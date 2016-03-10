@@ -1,4 +1,4 @@
-<div class="user-list-block" ng-controller="UserController as vm">
+<div class="user-list-block">
     <div class="user-header">
         <div class="container">
             <div class="col-sm-5 text-left">
@@ -17,54 +17,55 @@
             </div>
             <div class="hidden-xs col-sm-2 col-sm-offset-2">
                 <label class="custom-select">
-                    <select class="form-control rounded-input">
-                        <option>10</option>
-                        <option selected>15</option>
-                        <option>20</option>
+                    <select class="form-control rounded-input"
+                        ng-model="vm.itemsPerPage"
+                        convert-to-number>
+                        <option value="10">10</option>
+                        <option selected value="15">15</option>
+                        <option value="20">20</option>
                     </select>
                 </label>
             </div>
         </div>
     </div><!-- /.row -->
     <div class="container">
-        <div class="table-responsive">
-            <table class="table dark-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>E-mail</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="user">
-                        <th>Gary Busey</th>
-                        <th>busey@mail.com</th>
-                        <th class="text-danger">Inactive</th>
-                        <th>
-                            <a class="btn btn-circle btn-green"><i class="glyphicon glyphicon-pencil"></i></a>
-                            <a class="btn btn-circle btn-red"><i class="glyphicon glyphicon glyphicon-trash"></i></a>
-                        </th>
-                    </tr>
-                    <tr class="user">
-                        <th>Gary Busey</th>
-                        <th>busey@mail.com</th>
-                        <th class="text-danger">Inactive</th>
-                        <th>
-                            <a class="btn btn-circle btn-green default-button"><i class="glyphicon glyphicon-pencil"></i></a>
-                            <a class="btn btn-circle btn-red default-button"><i class="glyphicon glyphicon glyphicon-trash"></i></a>
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="user-list">
+            <div class="table-responsive">
+                <table class="table dark-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>E-mail</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="user" ng-repeat="user in vm.users | orderBy: 'name'">
+                            <th>{{ user.name }}</th>
+                            <th>{{ user.email }}</th>
+                            <th ng-class="{'text-danger': !user.status, 'text-success': user.status}">
+                                {{ vm.formatUserStatus(user.status) }}
+                            </th>
+                            <th>
+                                <a class="btn btn-circle btn-green"><i class="glyphicon glyphicon-pencil"></i></a>
+                                <a class="btn btn-circle btn-red"><i class="glyphicon glyphicon glyphicon-trash"></i></a>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <uib-pagination class="rounded-pagination center-block sticky sticky-pagination"
+                ng-model="vm.currentPage"
+                total-items="vm.totalItems"
+                items-per-page="vm.itemsPerPage"
+                previous-text="&lsaquo;"
+                next-text="&rsaquo;">
+            </uib-pagination>
         </div>
-        <uib-pagination total-items="vm.totalItems"
-                        ng-model="vm.currentPage"
-                        class="rounded-pagination center-block sticky sticky-pagination"
-                        previous-text="&lsaquo;"
-                        next-text="&rsaquo;">
-        </uib-pagination>
+        <p ng-hide="vm.users.length" class="text-center">
+            No courses yet.
+        </p>
     </div>
 
 </div>

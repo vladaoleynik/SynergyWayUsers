@@ -16,12 +16,17 @@
     $stateProvider
       .state('user-list', {
         url: '/users',
-        controller: 'UserController as vm',
+        controller: 'ListUserController as vm',
         templateUrl: '/static/app/components/users/user-list.html'
       })
-      .state('single-user', {
+      .state('edit-user', {
         url: '/users/{campaignId:int}/edit',
-        controller: 'UserController as vm',
+        controller: 'SingleUserController as vm',
+        templateUrl: '/static/app/components/users/single-user.html'
+      })
+      .state('create-user', {
+        url: '/users/new',
+        controller: 'SingleUserController as vm',
         templateUrl: '/static/app/components/users/single-user.html'
       })
       .state('courses', {
