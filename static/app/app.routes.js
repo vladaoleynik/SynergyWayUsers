@@ -17,17 +17,17 @@
       .state('user-list', {
         url: '/users',
         controller: 'ListUserController as vm',
-        templateUrl: '/static/app/components/users/user-list.html'
+        templateUrl: '/static/app/components/user-list/user-list.html'
       })
       .state('edit-user', {
         url: '/users/{campaignId:int}/edit',
         controller: 'SingleUserController as vm',
-        templateUrl: '/static/app/components/users/single-user.html'
+        templateUrl: '/static/app/components/user/single-user.html'
       })
       .state('create-user', {
         url: '/users/new',
         controller: 'SingleUserController as vm',
-        templateUrl: '/static/app/components/users/single-user.html'
+        templateUrl: '/static/app/components/user/single-user.html'
       })
       .state('courses', {
         url: '/courses',

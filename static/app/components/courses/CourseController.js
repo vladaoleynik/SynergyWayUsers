@@ -17,16 +17,19 @@
     function activate() {
       vm.courses = [
         {
+          id: 1,
           name: 'Python-Base',
-          code: 'P012345'
+          code: 'P012346'
         },
         {
+          id: 2,
           name: 'Python-DataBase',
-          code: 'P012345'
+          code: 'P012347'
         },
         {
+          id: 3,
           name: 'HTML',
-          code: 'P012345'
+          code: 'P012348'
         }
       ];
     }

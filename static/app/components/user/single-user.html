@@ -10,23 +10,24 @@
             <h2 class="title text-uppercase text-center">Create user</h2>
             <form class="clearfix" name="userForm" novalidate>
                 <div class="form-group required has-feedback"
-                     ng-class="{ 'has-error': userForm.$submitted && userForm.username.$invalid }">
+                     ng-class="{ 'has-error': userForm.$submitted && userForm.name.$invalid }">
                     <label for="userName">Name</label>
 
                     <div class="validated-field">
                         <input type="text"
-                             name="username"
-                             ng-model="vm.model.username"
+                             name="name"
+                             ng-model="vm.model.name"
                              autofocus
                              required
+                             ng-disabled="vm.editView"
                              class="form-control rounded-input"
                              id="userName"
                              maxlength="50">
                         <i class="glyphicon glyphicon-exclamation-sign form-control-feedback"></i>
 
                         <div class="form-messages"
-                             ng-if="userForm.$submitted && userForm.username.$invalid"
-                             ng-messages="userForm.username.$error"
+                             ng-if="userForm.$submitted && userForm.name.$invalid"
+                             ng-messages="userForm.name.$error"
                              role="alert">
                             <div ng-message="required">This field is required.</div>
                         </div>
@@ -86,15 +87,30 @@
 
                     <label class="custom-select">
                         <select id="userStatus"
+                                class="rounded-input form-control"
                                 convert-to-number
                                 name="status"
-                                ng-model="model.status"
-                                class="rounded-input form-control">
+                                ng-model="vm.model.status">
                             <option value="1">Active</option>
                             <option value="0" selected="selected">Inactive</option>
                         </select>
                     </label>
                 </div>
+
+                <div class="form-group">
+                    <label for="userCourses">Courses</label>
+
+                    <label class="custom-select">
+                        <select id="userCourses"
+                                class="rounded-input form-control"
+                                convert-to-number
+                                name="courses"
+                                ng-model="vm.selectedCourse"
+                                ng-options="item as item.name for item in vm.courses track by item.id">
+                        </select>
+                    </label>
+                </div>
+
                 <input class="btn btn-green pull-right"
                        type="submit"
                        value="Create"/>
