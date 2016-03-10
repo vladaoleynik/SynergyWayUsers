@@ -1,6 +1,6 @@
-<div class="container">
+<div class="container courses-block">
     <h2 class="title text-uppercase text-center">Courses</h2>
-    <table class="table dark-table">
+    <table class="table dark-table" ng-show="vm.courses.length">
         <thead>
             <tr>
                 <th>Name</th>
@@ -8,18 +8,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th>Python-Base</th>
-                <th>P012345</th>
-            </tr>
-            <tr>
-                <th>Python-DataBase</th>
-                <th>P012345</th>
-            </tr>
-            <tr>
-                <th>HTML</th>
-                <th>P012345</th>
+            <tr ng-repeat="course in vm.courses | orderBy: 'name'">
+                <th>{{ course.name }}</th>
+                <th>{{ course.code }}</th>
             </tr>
         </tbody>
     </table>
+    <p ng-hide="vm.courses.length" class="text-center">
+        No courses yet.
+    </p>
 </div>
