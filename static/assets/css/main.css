@@ -243,7 +243,7 @@ a:focus,
 .btn {
     text-align: center;
     font-size: 1em;
-    padding: 0.5em 1.5em;
+    padding: 0.5em 2em;
     border-radius: 2em;
     cursor: pointer;
     transition: 0.3s all;
@@ -366,6 +366,10 @@ select {
     padding: 0 1em!important;
 }
 
+.courses-select {
+    width: 80%!important;
+}
+
 .has-feedback .form-control-feedback {
     display: none;
 }
@@ -463,12 +467,45 @@ select {
     background-color: #c9c9c9;;
 }
 
+.selected-list li {
+    padding: 0.5em 0;
+    font-weight: 600;
+}
+
+.selected-list li:not(:last-of-type) {
+    border-bottom: 1px solid #c1c1c1;
+}
+
+.selected-list li .glyphicon {
+    font-size: 1.1em;
+    color: initial;
+    font-weight: normal;
+}
+
+.selected-list li .glyphicon:hover {
+    cursor: pointer;
+}
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */
 
 .inline-block {
     display: inline-block!important;
+}
+
+.block {
+    display: block!important;
+}
+
+.margin-r-0 {
+    margin-right: 0!important;
+}
+
+.clear-list {
+    margin-bottom: 2em;
+    padding: 0;
+    list-style-type: none;
 }
 
 /* ==========================================================================

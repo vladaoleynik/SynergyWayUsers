@@ -9,6 +9,7 @@
       'ui.mask',
       'ngMessages'
     ])
+    .constant('_', window._)
     .config([
       appConfig
     ])
