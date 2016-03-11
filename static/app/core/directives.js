@@ -2,7 +2,8 @@
   'use strict';
 
   angular.module('synergyWayUsers')
-    .directive('convertToNumber', convertToNumber);
+    .directive('convertToNumber', convertToNumber)
+    .directive('includeReplace', includeReplace);
 
   function convertToNumber() {
     return {
@@ -15,6 +16,16 @@
           return '' + val;
         });
       }
+    };
+  }
+
+  function includeReplace() {
+    return {
+        require: 'ngInclude',
+        restrict: 'A', /* optional */
+        link: function (scope, el, attrs) {
+            el.replaceWith(el.children());
+        }
     };
   }
 

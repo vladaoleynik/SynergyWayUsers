@@ -1,0 +1,83 @@
+<div class="form-group required has-feedback"
+     ng-class="{ 'has-error': userForm.$submitted && userForm.name.$invalid }">
+    <label for="userName">Name</label>
+
+    <div class="validated-field">
+        <input type="text"
+             name="name"
+             ng-model="vm.model.name"
+             autofocus
+             required
+             ng-disabled="vm.inEditView"
+             class="form-control rounded-input"
+             id="userName"
+             maxlength="50">
+        <i class="glyphicon glyphicon-exclamation-sign form-control-feedback"></i>
+
+        <div class="form-messages"
+             ng-if="userForm.$submitted && userForm.name.$invalid"
+             ng-messages="userForm.name.$error"
+             role="alert">
+            <div ng-message="required">This field is required.</div>
+        </div>
+    </div><!-- /.validated-field -->
+</div><!-- /.form-group -->
+<div class="form-group required has-feedback"
+     ng-class="{ 'has-error': userForm.$submitted && userForm.email.$invalid }">
+    <label for="userEmail">E-mail</label>
+
+    <div class="validated-field">
+        <input type="email"
+           name="email"
+           ng-model="vm.model.email"
+           required
+           class="form-control rounded-input"
+           id="userEmail">
+        <div class="form-messages"
+             ng-if="userForm.$submitted && userForm.email.$invalid"
+             ng-messages="userForm.email.$error"
+             role="alert">
+            <div ng-message="required">This field is required.</div>
+            <div ng-message="email">Please enter a valid email address!</div>
+        </div>
+        <i class="glyphicon glyphicon-exclamation-sign form-control-feedback"></i>
+    </div><!-- /.validated-field -->
+</div><!-- /.form-group -->
+<div class="form-group has-feedback"
+     ng-class="{ 'has-error': userForm.$submitted && userForm.phone.$invalid }">
+    <label for="userPhone">Phone</label>
+
+    <input type="tel"
+        name="phone"
+        ng-model="vm.model.phone"
+        ui-mask="+ 9?9 (999) 999 99 99"
+        class="form-control rounded-input"
+        id="userPhone">
+    <i class="glyphicon glyphicon-exclamation-sign form-control-feedback"></i>
+</div><!-- /.form-group -->
+<div class="form-group has-feedback"
+     ng-class="{ 'has-error': userForm.$submitted && userForm.mobile.$invalid }">
+    <label for="userMobile">Mobile phone</label>
+
+    <input type="tel"
+           name="mobile"
+           ui-mask="+ 9?9 (999) 999 99 99"
+           ng-model="vm.model.mobile"
+           class="form-control rounded-input"
+           id="userMobile">
+    <i class="glyphicon glyphicon-exclamation-sign form-control-feedback"></i>
+</div><!-- /.form-group -->
+<div class="form-group">
+    <label for="userStatus">Status</label>
+
+    <label class="custom-select">
+        <select id="userStatus"
+                class="rounded-input form-control"
+                convert-to-number
+                name="status"
+                ng-model="vm.model.status">
+            <option value="1">Active</option>
+            <option value="0" selected="selected">Inactive</option>
+        </select>
+    </label>
+</div><!-- /.form-group -->

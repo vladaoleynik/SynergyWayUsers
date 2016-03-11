@@ -1,0 +1,35 @@
+<div class="single-user-block clearfix">
+    <span class="text-alert alert-success">Changes saved successfully</span>
+    <div class="container clearfix">
+        <div class="pull-left">
+            <a class="btn btn-circle btn-md btn-red" href="#users">
+                <i class="glyphicon glyphicon-chevron-left"></i>
+            </a>
+        </div>
+        <div class="center-block user-form-block">
+            <h2 class="title text-uppercase text-center">Change user</h2>
+            <form class="clearfix"
+                name="userForm"
+                novalidate>
+                <div ng-include="'/static/app/components/user/user-form.html'"></div>
+                <div class="form-group">
+                    <label for="userCourses">Courses</label>
+
+                    <label class="custom-select">
+                        <select id="userCourses"
+                                class="rounded-input form-control"
+                                convert-to-number
+                                name="courses"
+                                ng-model="vm.selectedCourse"
+                                ng-options="item as item.name for item in vm.courses track by item.id">
+                        </select>
+                    </label>
+                </div>
+
+                <input class="btn btn-green pull-right"
+                       type="submit"
+                       value="Save"/>
+            </form>
+        </div>
+    </div>
+</div>

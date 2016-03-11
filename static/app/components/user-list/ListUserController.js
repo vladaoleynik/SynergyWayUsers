@@ -5,10 +5,11 @@
     .module('synergyWayUsers')
     .controller('ListUserController', ListUserController);
 
-  ListUserController.$inject = ['userUtils'];
+  ListUserController.$inject = ['userUtils', '$state'];
 
   function ListUserController(
-    userUtils
+    userUtils,
+    $state
   ) {
     var vm = this;
 
@@ -25,16 +26,19 @@
     function activate() {
       vm.users = [
         {
+          id: 1,
           name: 'Gary Busey',
           email: 'busey@mail.com',
           status: 0
         },
         {
+          id: 2,
           name: 'Gary Busey',
           email: 'busey@mail.com',
           status: 1
         },
         {
+          id: 3,
           name: 'Gary Busey',
           email: 'busey@mail.com',
           status: 0

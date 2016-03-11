@@ -20,14 +20,14 @@
         templateUrl: '/static/app/components/user-list/user-list.html'
       })
       .state('edit-user', {
-        url: '/users/{campaignId:int}/edit',
+        url: '/users/{userId:int}/edit',
         controller: 'SingleUserController as vm',
-        templateUrl: '/static/app/components/user/single-user.html'
+        templateUrl: '/static/app/components/user/edit-user.html'
       })
       .state('create-user', {
         url: '/users/new',
         controller: 'SingleUserController as vm',
-        templateUrl: '/static/app/components/user/single-user.html'
+        templateUrl: '/static/app/components/user/create-user.html'
       })
       .state('courses', {
         url: '/courses',

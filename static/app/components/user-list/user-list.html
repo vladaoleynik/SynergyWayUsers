@@ -2,7 +2,8 @@
     <div class="user-header">
         <div class="container">
             <div class="col-sm-5 text-left">
-                <a href="#" class="btn btn-circle btn-md btn-red">
+                <a ng-click="$state.go('create-user')"
+                   class="btn btn-circle btn-md btn-red">
                     <i class="glyphicon glyphicon-plus"></i>
                 </a>
                 <form class="inline-block search-form">
@@ -48,8 +49,13 @@
                                 {{ vm.formatUserStatus(user.status) }}
                             </th>
                             <th>
-                                <a class="btn btn-circle btn-green"><i class="glyphicon glyphicon-pencil"></i></a>
-                                <a class="btn btn-circle btn-red"><i class="glyphicon glyphicon glyphicon-trash"></i></a>
+                                <a class="btn btn-circle btn-green"
+                                    ng-click="$state.go('edit-user', {userId: user.id})">
+                                    <i class="glyphicon glyphicon-pencil"></i>
+                                </a>
+                                <a class="btn btn-circle btn-red">
+                                    <i class="glyphicon glyphicon glyphicon-trash"></i>
+                                </a>
                             </th>
                         </tr>
                     </tbody>

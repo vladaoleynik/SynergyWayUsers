@@ -11,10 +11,16 @@
     ])
     .config([
       appConfig
-    ]);
+    ])
+    .run(runFunction);
 
   function appConfig() {
 
+  }
+
+  function runFunction($rootScope, $state, $stateParams) {
+    $rootScope.$state = $state;
+    $rootScope.$stateParams = $stateParams;
   }
 
 })();

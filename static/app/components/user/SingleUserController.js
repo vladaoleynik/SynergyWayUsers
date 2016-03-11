@@ -5,9 +5,11 @@
     .module('synergyWayUsers')
     .controller('SingleUserController', SingleUserController);
 
-  SingleUserController.$inject = [];
+  SingleUserController.$inject = ['$stateParams'];
 
-  function SingleUserController() {
+  function SingleUserController(
+    $stateParams
+  ) {
     var vm = this;
 
     vm.model = {
@@ -17,7 +19,7 @@
       phone: '380678625609',
       status: 1
     };
-    vm.editView = true;
+    vm.inEditView = true;
 
     vm.courses = [
       {
@@ -40,6 +42,9 @@
     activate();
 
     function activate() {
+      var userId = $stateParams.userId;
+
+      vm.inEditView = Boolean(userId);
 
     }
 
