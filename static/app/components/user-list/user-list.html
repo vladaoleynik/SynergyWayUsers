@@ -1,31 +1,33 @@
 <div class="user-list-block">
     <div class="user-header">
         <div class="container">
-            <div class="col-sm-5 text-left">
-                <a ng-click="$state.go('create-user')"
-                   class="btn btn-circle btn-md btn-red">
-                    <i class="glyphicon glyphicon-plus"></i>
-                </a>
-                <form class="inline-block search-form">
-                    <button class="btn inline-block btn-circle btn-md splitted-btn btn-green" type="submit">
-                        <i class="glyphicon glyphicon-search"></i>
-                    </button>
-                    <input type="text" class="inline-block rounded-input input-md splitted-input form-control" placeholder="Search for...">
-                </form>
-            </div>
-            <div class="inline-block col-sm-3">
-                <h2 class="title text-uppercase text-center">Users</h2>
-            </div>
-            <div class="hidden-xs col-sm-2 col-sm-offset-2">
-                <label class="custom-select">
-                    <select class="form-control rounded-input"
-                        ng-model="vm.itemsPerPage"
-                        convert-to-number>
-                        <option value="10">10</option>
-                        <option selected value="15">15</option>
-                        <option value="20">20</option>
-                    </select>
-                </label>
+            <div class="row">
+                <div class="col-sm-5 text-left">
+                    <a ng-click="$state.go('create-user')"
+                        class="btn btn-circle btn-md btn-red new-user">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </a>
+                    <form class="inline-block search-form">
+                        <button class="btn inline-block btn-circle btn-md splitted-btn btn-green" type="submit">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                        <input type="text" class="inline-block rounded-input input-md splitted-input form-control" placeholder="Search for...">
+                    </form>
+                </div>
+                <div class="inline-block col-sm-3">
+                    <h2 class="title text-uppercase text-center">Users</h2>
+                </div>
+                <div class="hidden-xs col-sm-2 col-sm-offset-2">
+                    <label class="custom-select">
+                        <select class="form-control rounded-input"
+                            ng-model="vm.itemsPerPage"
+                            convert-to-number>
+                            <option value="10">10</option>
+                            <option selected value="15">15</option>
+                            <option value="20">20</option>
+                        </select>
+                    </label>
+                </div>
             </div>
         </div>
     </div><!-- /.row -->

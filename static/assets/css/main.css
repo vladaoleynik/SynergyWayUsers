@@ -514,6 +514,10 @@ select {
     list-style-type: none;
 }
 
+.absolute {
+    position: absolute;
+}
+
 /* ==========================================================================
    EXAMPLE Media Queries for Responsive Design.
    These examples override the primary ('mobile first') styles.
@@ -530,7 +534,16 @@ select {
     }
 
     .user-header .search-form {
-        width: 89%;
+        margin-left: 3rem;
+        width: calc(100% - 3rem);
+    }
+
+    .user-header .search-form .form-control {
+        width: 100%;
+    }
+
+    .user-header .new-user {
+        position: absolute;
     }
 
     .single-user-block .text-alert {
@@ -557,10 +570,6 @@ select {
 @media only screen and (max-width: 500px) {
     .user-header .title {
         margin-top: 2rem;
-    }
-
-    .user-header .search-form {
-        width: 89%;
     }
 }
 
