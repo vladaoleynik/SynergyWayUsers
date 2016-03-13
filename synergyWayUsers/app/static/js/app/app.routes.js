@@ -17,22 +17,22 @@
       .state('user-list', {
         url: '/users',
         controller: 'ListUserController as vm',
-        templateUrl: '/static/app/components/user-list/user-list.html'
+        templateUrl: '/synergyWayUsers/app/static/js/app/components/user-list/user-list.html'
       })
       .state('edit-user', {
         url: '/users/{userId:int}/edit',
         controller: 'SingleUserController as vm',
-        templateUrl: '/static/app/components/user/edit-user.html'
+        templateUrl: '/synergyWayUsers/app/static/js/app/components/user/edit-user.html'
       })
       .state('create-user', {
         url: '/users/new',
         controller: 'SingleUserController as vm',
-        templateUrl: '/static/app/components/user/create-user.html'
+        templateUrl: '/synergyWayUsers/app/static/js/app/components/user/create-user.html'
       })
       .state('courses', {
         url: '/courses',
         controller: 'CourseController as vm',
-        templateUrl: '/static/app/components/courses/courses.html'
+        templateUrl: '/synergyWayUsers/app/static/js/app/components/courses/courses.html'
       })
   }
 
