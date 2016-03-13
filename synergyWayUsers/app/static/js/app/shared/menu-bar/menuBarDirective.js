@@ -7,7 +7,7 @@
   function menuBar($location) {
     return {
       restrict: 'E',
-      templateUrl: '/synergyWayUsers/app/static/js/app/shared/menu-bar/menu-bar.html',
+      templateUrl: '/static/js/app/shared/menu-bar/menu-bar.html',
       link: function(scope, element, attrs) {
         scope.menuClass = menuClass;
 
