@@ -21,6 +21,7 @@
                     <label class="custom-select">
                         <select class="form-control rounded-input"
                             ng-model="vm.itemsPerPage"
+                            ng-change="vm.loadPaginatedUsers()"
                             convert-to-number>
                             <option value="10">10</option>
                             <option selected value="15">15</option>
@@ -68,7 +69,8 @@
                 total-items="vm.totalItems"
                 items-per-page="vm.itemsPerPage"
                 previous-text="&lsaquo;"
-                next-text="&rsaquo;">
+                next-text="&rsaquo;"
+                ng-change="vm.loadPaginatedUsers()">
             </uib-pagination>
         </div>
         <p ng-hide="vm.users.length" class="text-center">

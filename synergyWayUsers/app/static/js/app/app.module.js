@@ -7,7 +7,8 @@
       'ui.router',
       'ui.bootstrap',
       'ui.mask',
-      'ngMessages'
+      'ngMessages',
+      'ngResource'
     ])
     .constant('_', window._)
     .config([

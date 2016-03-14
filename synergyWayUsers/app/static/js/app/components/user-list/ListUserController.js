@@ -5,11 +5,11 @@
     .module('synergyWayUsers')
     .controller('ListUserController', ListUserController);
 
-  ListUserController.$inject = ['userUtils', '$state'];
+  ListUserController.$inject = ['userUtils', 'userService'];
 
   function ListUserController(
     userUtils,
-    $state
+    userService
   ) {
     var vm = this;
 
@@ -21,30 +21,31 @@
 
     vm.formatUserStatus = userUtils.formatUserStatus;
 
+    vm.loadPaginatedUsers = loadPaginatedUsers;
+
     activate();
 
     function activate() {
-      vm.users = [
-        {
-          id: 1,
-          name: 'Gary Busey',
-          email: 'busey@mail.com',
-          status: 0
-        },
-        {
-          id: 2,
-          name: 'Gary Busey',
-          email: 'busey@mail.com',
-          status: 1
-        },
-        {
-          id: 3,
-          name: 'Gary Busey',
-          email: 'busey@mail.com',
-          status: 0
-        }
-      ];
-      vm.totalItems = vm.users.length;
+      loadPaginatedUsers();
+    }
+
+    function loadPaginatedUsers() {
+      userService.query({page: vm.currentPage, number: vm.itemsPerPage})
+        .$promise
+        .then(userSuccess)
+        .catch(userError);
+
+      function userSuccess(response) {
+        vm.users = response;
+        if(vm.users.length)
+          vm.totalItems = vm.users[0].full_count;
+        else
+          vm.totalItems = 0
+      }
+
+      function userError() {
+
+      }
     }
 
   }
