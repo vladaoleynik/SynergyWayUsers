@@ -20,3 +20,10 @@ CSRF_SESSION_KEY = "secret"
 
 # Secret key for signing cookies
 SECRET_KEY = "secret"
+
+# DB credentials
+DB_NAME = 'users'
+DB_USER = 'synergy_way'
+DB_PASS = 'root'
+DB_HOST = '127.0.0.1'
+DB_PORT = '5432'
