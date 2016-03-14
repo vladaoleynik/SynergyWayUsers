@@ -41,3 +41,15 @@ class UserModel(object):
         records = cursor.fetchall()
 
         return records
+
+
+class CourseModel(object):
+    def get_courses(self):
+        conn = BaseModel().get_db_connection()
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+        cursor.callproc("public.fn_getcoursedata")
+
+        records = cursor.fetchall()
+
+        return records

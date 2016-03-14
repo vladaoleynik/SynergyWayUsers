@@ -16,4 +16,7 @@ app.add_url_rule('/', view_func=views.IndexView.as_view(name='index'))
 app.add_url_rule('/api/users',
                  view_func=api.UserAPI.as_view(name='user-list'),
                  methods=['GET'])
+app.add_url_rule('/api/courses',
+                 view_func=api.CourseAPI.as_view(name='course-list'),
+                 methods=['GET'])
 
