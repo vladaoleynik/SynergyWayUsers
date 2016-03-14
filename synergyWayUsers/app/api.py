@@ -1,7 +1,7 @@
 from flask import json, abort, request
 from flask.views import MethodView
 
-from . import models
+from . import models, serializers
 
 
 class UserAPI(MethodView):
@@ -14,9 +14,19 @@ class UserAPI(MethodView):
 
         if user_id is None:
             try:
-                users = self.user_model.get_users(page=page, number=number)
+                users = self.user_model.get_all(page=page, number=number)
                 return json.dumps(users)
             except Exception:
+                abort(500)
+        else:
+            try:
+                user = self.user_model.get_object(user_id)
+                serializer = serializers.UserSerializer(user)
+                user = serializer.serialize_object()
+                if not user:
+                    abort(404)
+                return json.dumps(user)
+            except Exception as exc:
                 abort(500)
 
         return
@@ -37,7 +47,7 @@ class CourseAPI(MethodView):
 
     def get(self):
         try:
-            courses = self.course_model.get_courses()
+            courses = self.course_model.get_all()
             return json.dumps(courses)
         except Exception:
             abort(500)

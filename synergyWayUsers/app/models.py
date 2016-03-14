@@ -15,6 +15,13 @@ class BaseModel(object):
         self.db_connection = None
         self.cursor = None
 
+    def get_cursor(self, cursor_factory=None):
+        if not cursor_factory:
+            cursor_factory = psycopg2.extras.RealDictCursor
+
+        conn = self.get_db_connection()
+        return conn.cursor(cursor_factory=cursor_factory)
+
     def get_db_connection(self):
         try:
             self.db_connection = psycopg2.connect(
@@ -32,9 +39,8 @@ class BaseModel(object):
 
 
 class UserModel(object):
-    def get_users(self, page=1, number=15):
-        conn = BaseModel().get_db_connection()
-        cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    def get_all(self, page=1, number=15):
+        cursor = BaseModel().get_cursor()
 
         cursor.callproc("public.fn_getuserdata", [number, page])
 
@@ -42,9 +48,18 @@ class UserModel(object):
 
         return records
 
+    def get_object(self, id):
+        cursor = BaseModel().get_cursor()
+
+        cursor.callproc("public.fn_getuserbyid", [id])
+
+        user = cursor.fetchall()
+
+        return user
+
 
 class CourseModel(object):
-    def get_courses(self):
+    def get_all(self):
         conn = BaseModel().get_db_connection()
         cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
