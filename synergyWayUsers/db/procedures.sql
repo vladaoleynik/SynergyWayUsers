@@ -42,6 +42,36 @@ END;
 $BODY$
 LANGUAGE 'plpgsql';
 
+
+CREATE OR REPLACE FUNCTION fn_getUserById (
+  _user_id BIGINT
+)
+RETURNS TABLE (
+  "id" INTEGER,
+  "name" VARCHAR,
+  "email" VARCHAR,
+  "mobile" VARCHAR,
+  "phone" VARCHAR,
+  "status" BOOLEAN,
+  "course_id" INTEGER,
+  "course_name" VARCHAR,
+  "course_code" VARCHAR
+) AS
+$BODY$
+  BEGIN
+    RETURN QUERY SELECT
+      "user".*,
+      "course".course_id course_id,
+      "course".name course_name,
+      "course".code course_code
+    FROM public."user"
+    LEFT JOIN "user_courses" ON ("user".user_id = "user_courses".user_id)
+    LEFT JOIN "course" ON ("user_courses".course_id = "course".course_id)
+    WHERE "user".user_id = _user_id;
+  END;
+$BODY$
+LANGUAGE plpgsql;
+
 CREATE OR REPLACE FUNCTION fn_getCourseData (
 
 )
