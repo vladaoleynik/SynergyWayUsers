@@ -45,7 +45,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="user" ng-repeat="user in vm.users | orderBy: 'name'">
+                        <tr class="user" ng-repeat="user in vm.users">
                             <th>{{ user.name }}</th>
                             <th>{{ user.email }}</th>
                             <th ng-class="{'text-danger': !user.status, 'text-success': user.status}">
