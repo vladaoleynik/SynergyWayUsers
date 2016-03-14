@@ -41,3 +41,16 @@ BEGIN
 END;
 $BODY$
 LANGUAGE 'plpgsql';
+
+CREATE OR REPLACE FUNCTION fn_getCourseData (
+
+)
+RETURNS SETOF "course" AS
+$BODY$
+  BEGIN
+    RETURN QUERY SELECT
+      *
+    FROM public."course";
+  END;
+$BODY$
+LANGUAGE plpgsql;
