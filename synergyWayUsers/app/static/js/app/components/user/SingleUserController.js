@@ -34,6 +34,7 @@
     vm.getAvailableCourses = getAvailableCourses;
 
     vm.updateUser = updateUser;
+    vm.createUser = createUser;
 
     activate();
 
@@ -137,7 +138,35 @@
         .catch(userError);
 
       function userSuccess(response) {
-        if (!response.fn_updateuser) {
+        if (response.status == 'error') {
+          userError();
+          return;
+        }
+
+        vm.successfulRequest = true;
+        $timeout(function () {
+          $state.go('user-list');
+        }, 3000)
+
+      }
+
+      function userError() {
+        vm.successfulRequest = false;
+      }
+    }
+
+    function createUser(){
+      var data = prepareUserData();
+
+      vm.successfulRequest = undefined;
+
+      userService.save(data)
+        .$promise
+        .then(userSuccess)
+        .catch(userError);
+
+      function userSuccess(response) {
+        if (response.status == 'error') {
           userError();
           return;
         }

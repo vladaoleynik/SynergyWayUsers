@@ -58,11 +58,11 @@
       function userSuccess(response) {
         var index = _.findIndex(vm.users, {id: userId});
         if (index > -1)
-          vm.users = vm.users.slice(index + 1, 1);
+          vm.users.splice(index, 1);
       }
 
       function userError(error) {
-        return;
+
       }
     }
 
