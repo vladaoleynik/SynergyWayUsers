@@ -7,7 +7,6 @@ from . import models, serializers, app
 from .models import ModelError
 
 
-@app.errorhandler(500)
 @app.errorhandler(404)
 def not_found(error):
     return make_response(
@@ -15,6 +14,16 @@ def not_found(error):
             'status': 'error',
             'error': 'Not found'
         }), 404
+    )
+
+
+@app.errorhandler(500)
+def internal_error(error):
+    return make_response(
+        jsonify({
+            'status': 'error',
+            'error': 'Internal error'
+        }), 500
     )
 
 
@@ -32,13 +41,16 @@ class UserAPI(MethodView):
             users = []
 
             try:
-                users = self.user_model.get_all(
+                users = self.user_model.list(
                     page=page, number=number, search_str=search_str
                 )
             except (ModelError, DatabaseError, InternalError):
                 abort(500)
 
-            return json.dumps(users)
+            serializer = serializers.UserSerializer(users)
+            users = serializer.serialize_list()
+
+            return jsonify(users)
 
         user = None
         try:
@@ -52,7 +64,7 @@ class UserAPI(MethodView):
         serializer = serializers.UserSerializer(user)
         user = serializer.serialize_object()
 
-        return json.dumps(user)
+        return jsonify(user)
 
     def put(self, user_id):
         if not user_id:
@@ -63,7 +75,7 @@ class UserAPI(MethodView):
 
         updated = None
         try:
-            updated = self.user_model.update_object(user_id, request.json)
+            updated = self.user_model.update(user_id, request.json)
         except (ModelError, DatabaseError, InternalError):
             abort(500)
 
@@ -80,7 +92,7 @@ class UserAPI(MethodView):
 
         deleted_rows = None
         try:
-            deleted_rows = self.user_model.delete_object(user_id)
+            deleted_rows = self.user_model.delete(user_id)
         except (ModelError, DatabaseError, InternalError):
             abort(500)
 
@@ -97,7 +109,7 @@ class UserAPI(MethodView):
 
         created = None
         try:
-            created = self.user_model.create_object(request.json)
+            created = self.user_model.create(request.json)
         except (ModelError, DatabaseError, InternalError):
             abort(500)
 
@@ -116,11 +128,11 @@ class CourseAPI(MethodView):
     def get(self):
         courses = []
         try:
-            courses = self.course_model.get_all()
+            courses = self.course_model.list()
         except (ModelError, DatabaseError, InternalError):
             abort(500)
 
-        if not courses:
+        if courses is None:
             abort(500)
 
         return json.dumps(courses)
