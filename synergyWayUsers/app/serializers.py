@@ -14,7 +14,7 @@ class UserSerializer(object):
 
         result['courses'] = [
             {
-                'id': obj['course_id'],
+                'course_id': obj['course_id'],
                 'name': obj['course_name'],
                 'code': obj['course_code']
             } for obj in self.data

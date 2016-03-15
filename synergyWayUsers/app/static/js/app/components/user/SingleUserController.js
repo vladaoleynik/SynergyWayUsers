@@ -6,12 +6,14 @@
     .controller('SingleUserController', SingleUserController);
 
   SingleUserController.$inject = [
-    '$stateParams', '_'
+    '$stateParams', '_', 'userService', 'courseService'
   ];
 
   function SingleUserController(
     $stateParams,
-    _
+    _,
+    userService,
+    courseService
   ) {
     var vm = this;
 
@@ -20,23 +22,7 @@
     };
     vm.inEditView = true;
 
-    vm.allCourses = [
-      {
-        id: 1,
-        name: 'Python-Base',
-        code: 'P012346'
-      },
-      {
-        id: 2,
-        name: 'Python-DataBase',
-        code: 'P012347'
-      },
-      {
-        id: 3,
-        name: 'HTML',
-        code: 'P012348'
-      }
-    ];
+    vm.allCourses = [];
 
     vm.selectedCourse = undefined;
     vm.selectCourse = selectCourse;
@@ -51,31 +37,42 @@
 
       vm.inEditView = Boolean(userId);
 
-      if (userId) {
-        vm.model = {
-          id: 1,
-          name: 'Gary Busey',
-          email: 'busey@mail.com',
-          phone: '380678625609',
-          status: 1,
-          courses: [
-            {
-              id: 1,
-              name: 'Python-Base',
-              code: 'P012346'
-            }
-          ]
-        };
+      courseService.query()
+        .$promise
+        .then(courseSuccess)
+        .catch(courseError);
+
+      function courseSuccess(response) {
+        vm.allCourses = response;
+
+        selectCourse(0);
+      }
+
+      function courseError() {
 
       }
 
-      selectCourse(0);
+      if (userId) {
+        userService.get({userId: userId})
+          .$promise
+          .then(userSuccess)
+          .catch(userError);
+      }
+
+      function userSuccess(response) {
+        vm.model = response;
+
+        selectCourse(0);
+      }
+
+      function userError() {
+
+      }
     }
 
     function addCourse(dataList, item) {
       dataList.push(item);
       selectCourse(0);
-
     }
 
     function removeCourse(dataList, item) {

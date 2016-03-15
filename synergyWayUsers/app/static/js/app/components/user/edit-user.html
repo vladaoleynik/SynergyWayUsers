@@ -21,7 +21,7 @@
                                     class="rounded-input form-control"
                                     name="courses"
                                     ng-model="vm.selectedCourse"
-                                    ng-options="item as item.name for item in vm.getAvailableCourses() track by item.id">
+                                    ng-options="item as item.name for item in vm.getAvailableCourses() track by item.course_id">
                             </select>
                         </label>
                         <a class="btn btn-circle btn-md btn-green margin-r-0 pull-right"
