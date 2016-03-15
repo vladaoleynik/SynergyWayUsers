@@ -7,7 +7,11 @@
 
   userService.$inject = ['$resource'];
   function userService($resource) {
-    return $resource('/api/users/:userId', {userId: '@userId'})
+    return $resource('/api/users/:userId', {userId: '@userId'}, {
+      update: {
+        method: 'PUT'
+      }
+    })
   }
 
   courseService.$inject = ['$resource'];

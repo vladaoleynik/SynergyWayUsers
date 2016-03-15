@@ -6,14 +6,16 @@
     .controller('SingleUserController', SingleUserController);
 
   SingleUserController.$inject = [
-    '$stateParams', '_', 'userService', 'courseService'
+    '$stateParams', '_', 'userService', 'courseService', '$state', '$timeout'
   ];
 
   function SingleUserController(
     $stateParams,
     _,
     userService,
-    courseService
+    courseService,
+    $state,
+    $timeout
   ) {
     var vm = this;
 
@@ -21,6 +23,7 @@
       status: 1
     };
     vm.inEditView = true;
+    vm.successfulRequest = undefined;
 
     vm.allCourses = [];
 
@@ -29,6 +32,8 @@
     vm.addCourse = addCourse;
     vm.removeCourse = removeCourse;
     vm.getAvailableCourses = getAvailableCourses;
+
+    vm.updateUser = updateUser;
 
     activate();
 
@@ -62,6 +67,11 @@
       function userSuccess(response) {
         vm.model = response;
 
+        if (vm.model.status)
+          vm.model.status = 1;
+        else
+          vm.model.status = 0;
+
         selectCourse(0);
       }
 
@@ -93,6 +103,55 @@
       return _.filter(vm.allCourses, function(obj){
         return !_.find(vm.model.courses, obj);
       });
+    }
+
+    function prepareUserData() {
+      var data = {
+        course_ids: [],
+        email: vm.model.email,
+        user_id: vm.model.id,
+        mobile: vm.model.mobile,
+        name: vm.model.name,
+        phone: vm.model.phone,
+        status: Boolean(vm.model.status)
+      },
+        course_ids = [];
+
+      _.forEach(vm.model.courses, function(item) {
+        course_ids.push(item.course_id);
+      });
+
+      data.course_ids = course_ids;
+
+      return data;
+    }
+
+    function updateUser(){
+      var data = prepareUserData();
+
+      vm.successfulRequest = undefined;
+
+      userService.update({userId: vm.model.id}, data)
+        .$promise
+        .then(userSuccess)
+        .catch(userError);
+
+      function userSuccess(response) {
+        if (!response.fn_updateuser) {
+          userError();
+          return;
+        }
+
+        vm.successfulRequest = true;
+        $timeout(function () {
+          $state.go('user-list');
+        }, 3000)
+
+      }
+
+      function userError() {
+        vm.successfulRequest = false;
+      }
     }
 
   }

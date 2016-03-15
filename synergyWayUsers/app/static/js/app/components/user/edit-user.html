@@ -1,5 +1,6 @@
 <div class="single-user-block clearfix">
-    <span class="text-alert alert-success">Changes saved successfully</span>
+    <span class="text-alert alert-success" ng-show="vm.successfulRequest">Changes saved successfully</span>
+    <span class="text-alert alert-success" ng-show="vm.successfulRequest == false">Internal error</span>
     <div class="container clearfix">
         <div class="pull-left">
             <a class="btn btn-circle btn-md btn-red" href="#users">
@@ -10,6 +11,7 @@
             <h2 class="title text-uppercase text-center">Change user</h2>
             <form class="clearfix"
                 name="userForm"
+                ng-submit="vm.updateUser()"
                 novalidate>
                 <div ng-include="'/static/js/app/components/user/user-form.html'"></div>
                 <div class="form-group overflow">
