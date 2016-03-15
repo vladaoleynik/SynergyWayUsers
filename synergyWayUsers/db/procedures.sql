@@ -42,6 +42,7 @@ END;
 $$
 LANGUAGE 'plpgsql';
 
+
 CREATE OR REPLACE FUNCTION fn_getUserById (
   _user_id BIGINT
 )
@@ -73,6 +74,7 @@ $$
 $$
 LANGUAGE plpgsql;
 
+
 CREATE OR REPLACE FUNCTION fn_getCourseData (
 
 )
@@ -88,36 +90,37 @@ $$
 $$
 LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION fn_updateUserCourseData (
-  _user_id INTEGER,
-  _course_ids INTEGER[]
+
+CREATE OR REPLACE FUNCTION fn_createUpdateUserCourseData (
+  _user_id BIGINT,
+  _course_ids INTEGER[],
+  _update_flag BOOLEAN DEFAULT TRUE
 ) RETURNS VOID AS
 $$
 BEGIN
-  -- Lock the containing object tuple to prevernt inserts into the
-  -- collection table.
-  PERFORM true FROM "user" WHERE "user".user_id = _user_id FOR UPDATE;
+  IF _update_flag THEN
+    PERFORM true FROM "user" WHERE "user".user_id = _user_id FOR UPDATE;
 
-  IF (EXISTS (SELECT * FROM user_courses WHERE "user_courses".user_id = _user_id))
-    THEN
-      DELETE FROM user_courses
-        WHERE "user_courses".user_id = _user_id;
+    IF (EXISTS (SELECT * FROM user_courses WHERE "user_courses".user_id = _user_id))
+      THEN
+        DELETE FROM user_courses
+          WHERE "user_courses".user_id = _user_id;
+    END IF;
   END IF;
 
   INSERT INTO user_courses (user_id, course_id)
   SELECT _user_id, _course_ids[gs.ser]
   FROM generate_series(1, array_upper(_course_ids, 1))
     AS gs(ser);
-EXCEPTION WHEN OTHERS THEN
-  ROLLBACK;
 END;
 $$
 LANGUAGE plpgsql SECURITY DEFINER;
 
+
 CREATE OR REPLACE FUNCTION fn_updateUser(
   _user_id INTEGER,
   _name VARCHAR(100),
-  _email VARCHAR(100),
+  _email VARCHAR(80),
   _mobile VARCHAR(20),
   _phone VARCHAR(20),
   _status BOOLEAN,
@@ -137,24 +140,57 @@ BEGIN
       status = COALESCE(_status, "user".status)
   WHERE "user".user_id = _user_id;
 
-  PERFORM public.fn_updateUserCourseData(_user_id, _course_ids);
+  PERFORM fn_createUpdateUserCourseData(_user_id, _course_ids);
 
   RETURN FOUND;
-EXCEPTION WHEN OTHERS THEN
-  ROLLBACK;
 END;
 $$
 LANGUAGE plpgsql;
 
+
 CREATE OR REPLACE FUNCTION fn_deleteUser (
   _user_id INTEGER
-) RETURNS VOID AS
+) RETURNS INTEGER AS
 $$
+DECLARE
+  affected_rows NUMERIC DEFAULT 0;
+
 BEGIN
   DELETE FROM "user"
     WHERE "user".user_id = _user_id;
+  GET DIAGNOSTICS affected_rows = ROW_COUNT;
+  RETURN affected_rows;
 EXCEPTION WHEN OTHERS THEN
   ROLLBACK;
+  RETURN affected_rows;
 END;
 $$
 LANGUAGE plpgsql SECURITY DEFINER;
+
+
+CREATE OR REPLACE FUNCTION fn_createUser(
+  _name VARCHAR(100),
+  _email VARCHAR(80),
+  _mobile VARCHAR(20),
+  _phone VARCHAR(20),
+  _status BOOLEAN,
+  _course_ids INTEGER[]
+)
+RETURNS BOOLEAN AS
+$$
+DECLARE created_id BIGINT;
+
+BEGIN
+  INSERT INTO "user" (
+    name, email, mobile, phone, status
+  )
+  VALUES (
+    _name, _email, _mobile, _phone, _status
+  ) RETURNING user_id INTO created_id;
+  PERFORM fn_createUpdateUserCourseData(created_id, _course_ids, FALSE );
+  RETURN FOUND;
+END;
+$$
+LANGUAGE plpgsql SECURITY DEFINER;
+
+
