@@ -18,8 +18,12 @@ class BaseModel(object):
 
         cursor = connection.get_cursor()
 
+        args = [kwargs.get('number'),
+                kwargs.get('page'),
+                kwargs.get('search_str')]
+
         try:
-            cursor.callproc(self._all_proc_name, list(args))
+            cursor.callproc(self._all_proc_name, args)
         except (InternalError, DatabaseError):
             connection.db_connection.rollback()
             return None

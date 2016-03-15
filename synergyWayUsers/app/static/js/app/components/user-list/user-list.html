@@ -7,11 +7,15 @@
                         class="btn btn-circle btn-md btn-red new-user">
                         <i class="glyphicon glyphicon-plus"></i>
                     </a>
-                    <form class="inline-block search-form">
+                    <form class="inline-block search-form"
+                        ng-submit="vm.loadPaginatedUsers()">
                         <button class="btn inline-block btn-circle btn-md splitted-btn btn-green" type="submit">
                             <i class="glyphicon glyphicon-search"></i>
                         </button>
-                        <input type="text" class="inline-block rounded-input input-md splitted-input form-control" placeholder="Search for...">
+                        <input type="text"
+                               class="inline-block rounded-input input-md splitted-input form-control"
+                               placeholder="Search for..."
+                               ng-model="vm.search">
                     </form>
                 </div>
                 <div class="inline-block col-sm-3">
@@ -76,7 +80,7 @@
             </uib-pagination>
         </div>
         <p ng-hide="vm.users.length" class="text-center">
-            No users yet.
+            No users.
         </p>
     </div>
 

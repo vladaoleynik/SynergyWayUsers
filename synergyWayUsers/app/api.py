@@ -24,9 +24,12 @@ class UserAPI(MethodView):
     def get(self, user_id=None):
         page = request.args.get('page', 1)
         number = request.args.get('number', 15)
+        search_str = request.args.get('search_str')
 
         if user_id is None:
-            users = self.user_model.get_all(page=page, number=number)
+            users = self.user_model.get_all(
+                page=page, number=number, search_str=search_str
+            )
             return json.dumps(users)
 
         user = self.user_model.get_object(user_id)

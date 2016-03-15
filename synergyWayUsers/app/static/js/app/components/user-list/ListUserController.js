@@ -15,6 +15,8 @@
 
     vm.users = [];
 
+    vm.search = undefined;
+
     vm.itemsPerPage = 15;
     vm.totalItems = 0;
     vm.currentPage = 1;
@@ -31,7 +33,11 @@
     }
 
     function loadPaginatedUsers() {
-      userService.query({page: vm.currentPage, number: vm.itemsPerPage})
+      userService.query({
+        page: vm.currentPage,
+        number: vm.itemsPerPage,
+        search_str: vm.search
+      })
         .$promise
         .then(userSuccess)
         .catch(userError);
