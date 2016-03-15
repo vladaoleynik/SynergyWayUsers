@@ -75,6 +75,22 @@ class UserModel(BaseModel):
 
         return records
 
+    def delete_object(self, id):
+        if not id:
+            return
+
+        cursor = connection.get_cursor()
+
+        try:
+            cursor.callproc("public.fn_deleteuser", [id])
+        except (InternalError, DatabaseError):
+            connection.db_connection.rollback()
+            return None
+
+        status = cursor.fetchone()
+
+        return status
+
 
 class CourseModel(BaseModel):
     __all_proc_name__ = 'public.fn_getcoursedata'

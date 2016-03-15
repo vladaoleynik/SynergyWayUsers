@@ -54,6 +54,17 @@ class UserAPI(MethodView):
 
         return jsonify(updated_user)
 
+    def delete(self, user_id):
+        if not user_id:
+            abort(404)
+
+        delete_status = self.user_model.delete_object(user_id)
+        if not delete_status:
+            abort(500)
+
+        print delete_status
+        return jsonify(delete_status)
+
 
 class CourseAPI(MethodView):
     def __init__(self):
@@ -74,7 +85,7 @@ app.add_url_rule('/api/users',
                  methods=['GET'])
 app.add_url_rule('/api/users/<int:user_id>',
                  view_func=user_view,
-                 methods=['GET', 'PUT'])
+                 methods=['GET', 'PUT', 'DELETE'])
 
 # Course API
 course_view = CourseAPI.as_view('course_api')
