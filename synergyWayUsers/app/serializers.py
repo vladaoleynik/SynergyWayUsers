@@ -1,16 +1,14 @@
-from copy import deepcopy
-
-
 class UserSerializer(object):
     def __init__(self, data):
         self.data = data
 
     def serialize_object(self):
-        result = deepcopy(self.data[0])
-        print self.data
-        del result['course_id']
-        del result['course_name']
-        del result['course_code']
+        user = self.data[0]
+        result = {}
+
+        for name, value in user.iteritems():
+            if 'course_' not in name:
+                result[name] = value
 
         result['courses'] = [
             {
@@ -21,3 +19,11 @@ class UserSerializer(object):
         ]
 
         return result
+
+    def serialize_list(self):
+        single_user = self.data[0]
+
+        return {
+            'count': single_user.get('full_count', 0),
+            'data': self.data
+        }
