@@ -32,6 +32,11 @@ class UserAPI(MethodView):
         self.user_model = models.UserModel()
 
     def get(self, user_id=None):
+        """
+        GET method to return data for all users or for concrete one.
+        :param user_id: int
+        :return: JSON array or object
+        """
         page = request.args.get('page', 1)
         number = request.args.get('number', 15)
         search_str = request.args.get('search_str')
@@ -67,6 +72,11 @@ class UserAPI(MethodView):
         return jsonify(user)
 
     def put(self, user_id):
+        """
+        PUT method to update data for user.
+        :param user_id: int
+        :return: JSON object with status
+        """
         if not user_id:
             abort(404)
 
@@ -87,6 +97,11 @@ class UserAPI(MethodView):
         })
 
     def delete(self, user_id):
+        """
+        DELETE method to delete user.
+        :param user_id: int
+        :return: JSON object with status
+        """
         if not user_id:
             abort(404)
 
@@ -104,6 +119,10 @@ class UserAPI(MethodView):
         })
 
     def post(self):
+        """
+        POST method to create user.
+        :return: JSON object with status
+        """
         if not request.json:
             abort(400)
 
@@ -126,6 +145,10 @@ class CourseAPI(MethodView):
         self.course_model = models.CourseModel()
 
     def get(self):
+        """
+        GET method to return data for all courses.
+        :return: JSON array
+        """
         courses = []
         try:
             courses = self.course_model.list()

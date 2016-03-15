@@ -16,6 +16,13 @@ class ModelError(Exception):
 
 class UserModel(object):
     def list(self, **kwargs):
+        """
+        Gets all records from Users table.
+        :param kwargs: dict. Includes page to show,
+         number of objects to retrieve (for pagination).
+         Search query to filter users.
+        :return: list of dicts.
+        """
         cursor = connection.get_cursor()
 
         args = [
@@ -35,6 +42,11 @@ class UserModel(object):
         return records
 
     def get_object(self, id):
+        """
+        Gets specified record from Users table.
+        :param id: integer.
+        :return: list.
+        """
         if not id:
             raise ModelError('Provide object id.', self.__class__)
 
@@ -51,6 +63,12 @@ class UserModel(object):
         return records
 
     def update(self, id, data):
+        """
+        Update specified record in Users table with provided data.
+        :param id: integer.
+        :param data: dict. Fields with values to update object with.
+        :return: boolean. If the record was updated.
+        """
         if not id:
             raise ModelError('Provide object id.', UserModel)
 
@@ -77,6 +95,11 @@ class UserModel(object):
         return status.get('fn_updateuser', False)
 
     def delete(self, id):
+        """
+        Deletes specified record from Users table.
+        :param id: integer.
+        :return: integer. Number of affected rows.
+        """
         if not id:
             raise ModelError('Provide object id.', UserModel)
 
@@ -93,6 +116,11 @@ class UserModel(object):
         return affected_row.get('fn_deleteuser', 0)
 
     def create(self, data):
+        """
+        Create record in Users table with provided data.
+        :param data: dict. Fields with values to create object with.
+        :return: boolean. If record was created.
+        """
         cursor = connection.get_cursor()
 
         try:
@@ -117,6 +145,10 @@ class UserModel(object):
 
 class CourseModel(object):
     def list(self, *args, **kwargs):
+        """
+        Gets all records from Course table.
+        :return: list of dicts.
+        """
         cursor = connection.get_cursor()
 
         try:

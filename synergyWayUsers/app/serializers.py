@@ -3,6 +3,11 @@ class UserSerializer(object):
         self.data = data
 
     def serialize_object(self):
+        """
+        Method to populate data for convenience on FE.
+        Formats single object.
+        :return: JSON. Formatted data.
+        """
         user = self.data[0]
         result = {}
 
@@ -21,6 +26,11 @@ class UserSerializer(object):
         return result
 
     def serialize_list(self):
+        """
+        Method to populate data for convenience on FE.
+        Formats list of objects.
+        :return: JSON. Formatted data.
+        """
         single_user = self.data[0]
 
         return {
