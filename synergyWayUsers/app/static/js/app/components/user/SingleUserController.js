@@ -111,10 +111,10 @@
     function prepareUserData() {
       var data = {
         course_ids: [],
-        email: vm.model.email,
+        email: vm.model.email.trim(),
         user_id: vm.model.id,
         mobile: vm.model.mobile,
-        name: vm.model.name,
+        name: vm.model.name.trim(),
         phone: vm.model.phone,
         status: Boolean(vm.model.status)
       },
