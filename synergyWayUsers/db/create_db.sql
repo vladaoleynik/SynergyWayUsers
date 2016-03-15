@@ -1,6 +1,7 @@
 -- Creating user and DB
 CREATE USER synergy_way WITH PASSWORD 'root';
 
+DROP DATABASE IF EXISTS users;
 CREATE DATABASE users
    WITH OWNER synergy_way
    TEMPLATE template0

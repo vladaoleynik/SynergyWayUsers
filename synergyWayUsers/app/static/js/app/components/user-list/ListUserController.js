@@ -22,6 +22,7 @@
     vm.formatUserStatus = userUtils.formatUserStatus;
 
     vm.loadPaginatedUsers = loadPaginatedUsers;
+    vm.deleteUser = deleteUser;
 
     activate();
 
@@ -45,6 +46,23 @@
 
       function userError() {
 
+      }
+    }
+
+    function deleteUser(userId) {
+      userService.delete({userId: userId})
+        .$promise
+        .then(userSuccess)
+        .catch(userError);
+
+      function userSuccess(response) {
+        var index = _.findIndex(vm.users, {id: userId});
+        if (index > -1)
+          vm.users = vm.users.slice(index + 1, 1);
+      }
+
+      function userError(error) {
+        return;
       }
     }
 

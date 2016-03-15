@@ -33,7 +33,7 @@
         </div>
     </div><!-- /.row -->
     <div class="container">
-        <div class="user-list">
+        <div class="user-list" ng-show="vm.users.length">
             <div class="table-responsive">
                 <table class="table dark-table">
                     <thead>
@@ -56,7 +56,8 @@
                                     ng-click="$state.go('edit-user', {userId: user.id})">
                                     <i class="glyphicon glyphicon-pencil"></i>
                                 </a>
-                                <a class="btn btn-circle btn-red">
+                                <a class="btn btn-circle btn-red"
+                                   ng-click="vm.deleteUser(user.id)">
                                     <i class="glyphicon glyphicon glyphicon-trash"></i>
                                 </a>
                             </th>
@@ -66,6 +67,7 @@
             </div>
             <uib-pagination class="rounded-pagination center-block sticky sticky-pagination"
                 ng-model="vm.currentPage"
+
                 total-items="vm.totalItems"
                 items-per-page="vm.itemsPerPage"
                 previous-text="&lsaquo;"

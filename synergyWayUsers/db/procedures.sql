@@ -37,7 +37,7 @@ BEGIN
  OFFSET page_number;
 
  EXCEPTION WHEN OTHERS THEN
- RAISE;
+   ROLLBACK;
 END;
 $$
 LANGUAGE 'plpgsql';
@@ -67,6 +67,8 @@ $$
     LEFT JOIN "user_courses" ON ("user".user_id = "user_courses".user_id)
     LEFT JOIN "course" ON ("user_courses".course_id = "course".course_id)
     WHERE "user".user_id = _user_id;
+  EXCEPTION WHEN OTHERS THEN
+    ROLLBACK;
   END;
 $$
 LANGUAGE plpgsql;
@@ -80,6 +82,8 @@ $$
     RETURN QUERY SELECT
       *
     FROM public."course";
+  EXCEPTION WHEN OTHERS THEN
+    ROLLBACK;
   END;
 $$
 LANGUAGE plpgsql;
@@ -104,7 +108,8 @@ BEGIN
   SELECT _user_id, _course_ids[gs.ser]
   FROM generate_series(1, array_upper(_course_ids, 1))
     AS gs(ser);
-
+EXCEPTION WHEN OTHERS THEN
+  ROLLBACK;
 END;
 $$
 LANGUAGE plpgsql SECURITY DEFINER;
@@ -135,6 +140,8 @@ BEGIN
   PERFORM public.fn_updateUserCourseData(_user_id, _course_ids);
 
   RETURN FOUND;
+EXCEPTION WHEN OTHERS THEN
+  ROLLBACK;
 END;
 $$
 LANGUAGE plpgsql;
@@ -146,6 +153,8 @@ $$
 BEGIN
   DELETE FROM "user"
     WHERE "user".user_id = _user_id;
+EXCEPTION WHEN OTHERS THEN
+  ROLLBACK;
 END;
 $$
 LANGUAGE plpgsql SECURITY DEFINER;
