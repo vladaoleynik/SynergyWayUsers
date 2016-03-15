@@ -2,6 +2,7 @@ import logging
 from psycopg2._psycopg import DatabaseError, InternalError
 
 from .db import connection
+from . import app
 
 
 logger = logging.getLogger(__name__)
@@ -31,9 +32,15 @@ class UserModel(object):
             kwargs.get('search_str')
         ]
 
+        app.logger.info('Getting User list with args: {}'.format(
+            kwargs
+        ))
+
         try:
             cursor.callproc('public.fn_getuserdata', args)
-        except (InternalError, DatabaseError):
+        except (InternalError, DatabaseError) as exc:
+            app.logger.info(exc.message)
+
             connection.db_connection.rollback()
             raise
 
@@ -52,9 +59,13 @@ class UserModel(object):
 
         cursor = connection.get_cursor()
 
+        app.logger.info('Getting User object with Id: {}'.format(id))
+
         try:
             cursor.callproc('public.fn_getuserbyid', [id])
-        except (InternalError, DatabaseError):
+        except (InternalError, DatabaseError) as exc:
+            app.logger.info(exc.message)
+
             connection.db_connection.rollback()
             raise
 
@@ -74,6 +85,9 @@ class UserModel(object):
 
         cursor = connection.get_cursor()
 
+        app.logger.info('Updating User object with Id {0} and data: {1}'
+                        .format(id, data))
+
         try:
             cursor.callproc(
                 "public.fn_updateuser", [
@@ -86,7 +100,9 @@ class UserModel(object):
                     data.get('course_ids')
                 ]
             )
-        except (InternalError, DatabaseError):
+        except (InternalError, DatabaseError) as exc:
+            app.logger.info(exc.message)
+
             connection.db_connection.rollback()
             raise
 
@@ -105,9 +121,13 @@ class UserModel(object):
 
         cursor = connection.get_cursor()
 
+        app.logger.info('Deleting User object with Id {0}'.format(id))
+
         try:
             cursor.callproc("public.fn_deleteuser", [id])
-        except (InternalError, DatabaseError):
+        except (InternalError, DatabaseError) as exc:
+            app.logger.info(exc.message)
+
             connection.db_connection.rollback()
             raise
 
@@ -123,6 +143,8 @@ class UserModel(object):
         """
         cursor = connection.get_cursor()
 
+        app.logger.info('Creating User object with data: {1}'.format(data))
+
         try:
             cursor.callproc(
                 "public.fn_createuser", [
@@ -134,7 +156,9 @@ class UserModel(object):
                     data.get('course_ids')
                 ]
             )
-        except (InternalError, DatabaseError):
+        except (InternalError, DatabaseError) as exc:
+            app.logger.info(exc.message)
+
             connection.db_connection.rollback()
             raise
 
@@ -151,9 +175,13 @@ class CourseModel(object):
         """
         cursor = connection.get_cursor()
 
+        app.logger.info('Getting Course list.')
+
         try:
             cursor.callproc('public.fn_getcoursedata')
-        except (InternalError, DatabaseError):
+        except (InternalError, DatabaseError) as exc:
+            app.logger.info(exc.message)
+
             connection.db_connection.rollback()
             raise
 
