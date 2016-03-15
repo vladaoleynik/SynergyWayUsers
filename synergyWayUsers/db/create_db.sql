@@ -17,23 +17,25 @@ GRANT ALL PRIVILEGES ON DATABASE users TO synergy_way;
 
 -- Creating DB schema
 CREATE TABLE "course" (
-  "course_id" serial NOT NULL PRIMARY KEY,
-  "name" varchar(80) NOT NULL,
-  "code" varchar(20) NOT NULL
+  "course_id" SERIAL NOT NULL PRIMARY KEY,
+  "name" VARCHAR(80) NOT NULL,
+  "code" VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE "user" (
-  "user_id" serial NOT NULL PRIMARY KEY,
-  "name" varchar(100) NOT NULL,
-  "email" varchar(254) NOT NULL,
-  "mobile" varchar(20) NULL,
-  "phone" varchar(20) NULL,
-  "status" boolean NOT NULL DEFAULT FALSE
+  "user_id" SERIAL NOT NULL PRIMARY KEY,
+  "name" VARCHAR(100) NOT NULL,
+  "email" VARCHAR(80) NOT NULL,
+  "mobile" VARCHAR(20) NULL,
+  "phone" VARCHAR(20) NULL,
+  "status" BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE "user_courses" (
-  "id" serial NOT NULL PRIMARY KEY,
-  "user_id" integer NOT NULL,
-  "course_id" integer NOT NULL,
+  "id" SERIAL NOT NULL PRIMARY KEY,
+  "user_id" INTEGER REFERENCES "user"(user_id)
+                    ON DELETE CASCADE,
+  "course_id" INTEGER REFERENCES course(course_id)
+                      ON DELETE CASCADE,
   UNIQUE ("user_id", "course_id")
 );

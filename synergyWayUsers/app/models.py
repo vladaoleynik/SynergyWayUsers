@@ -1,70 +1,45 @@
-import psycopg2
-import psycopg2.extras
 import logging
 
-from flask import Flask, current_app
+from .db import connection
 
-from .decorators import singleton
 
 logger = logging.getLogger(__name__)
 
 
-@singleton
 class BaseModel(object):
-    def __init__(self):
-        self.db_connection = None
-        self.cursor = None
+    __all_proc_name__ = None
+    __one_proc_name__ = None
+    __paginated__ = True
 
-    def get_cursor(self, cursor_factory=None):
-        if not cursor_factory:
-            cursor_factory = psycopg2.extras.RealDictCursor
+    def get_all(self, *args, **kwargs):
+        if self.__all_proc_name__ is None:
+            raise NotImplementedError('__all_proc_name__ must be overriden!')
 
-        conn = self.get_db_connection()
-        return conn.cursor(cursor_factory=cursor_factory)
+        cursor = connection.get_cursor()
 
-    def get_db_connection(self):
-        try:
-            self.db_connection = psycopg2.connect(
-                database=current_app.config['DB_NAME'],
-                user=current_app.config['DB_USER'],
-                password=current_app.config['DB_PASS'],
-                host=current_app.config['DB_HOST'],
-                port=current_app.config['DB_PORT']
-            )
-            logger.debug('Opened database successfully')
-        except psycopg2.DatabaseError as e:
-            logger.debug('Error {0}'.format(e))
-
-        return self.db_connection
-
-
-class UserModel(object):
-    def get_all(self, page=1, number=15):
-        cursor = BaseModel().get_cursor()
-
-        cursor.callproc("public.fn_getuserdata", [number, page])
+        cursor.callproc(self.__all_proc_name__, list(args))
 
         records = cursor.fetchall()
 
         return records
 
     def get_object(self, id):
-        cursor = BaseModel().get_cursor()
+        if self.__one_proc_name__ is None:
+            raise NotImplementedError('__one_proc_name__ must be overriden!')
 
-        cursor.callproc("public.fn_getuserbyid", [id])
+        cursor = connection.get_cursor()
 
-        user = cursor.fetchall()
-
-        return user
-
-
-class CourseModel(object):
-    def get_all(self):
-        conn = BaseModel().get_db_connection()
-        cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-
-        cursor.callproc("public.fn_getcoursedata")
+        cursor.callproc(self.__one_proc_name__, [id])
 
         records = cursor.fetchall()
 
         return records
+
+
+class UserModel(BaseModel):
+    __all_proc_name__ = 'public.fn_getuserdata'
+    __one_proc_name__ = 'public.fn_getuserbyid'
+
+
+class CourseModel(BaseModel):
+    __all_proc_name__ = 'public.fn_getcoursedata'
