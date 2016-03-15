@@ -16,6 +16,7 @@
     vm.users = [];
 
     vm.search = undefined;
+    vm.successfulRequest = undefined;
 
     vm.itemsPerPage = 15;
     vm.totalItems = 0;
@@ -33,7 +34,7 @@
     }
 
     function loadPaginatedUsers() {
-      userService.query({
+      userService.get({
         page: vm.currentPage,
         number: vm.itemsPerPage,
         search_str: vm.search
@@ -43,15 +44,19 @@
         .catch(userError);
 
       function userSuccess(response) {
-        vm.users = response;
-        if(vm.users.length)
-          vm.totalItems = vm.users[0].full_count;
-        else
-          vm.totalItems = 0
+        if (response.status == 'error') {
+          userError();
+          return;
+        }
+
+        vm.users = response.data;
+        vm.totalItems = response.count;
+
+        vm.successfulRequest = true;
       }
 
       function userError() {
-
+        vm.successfulRequest = false;
       }
     }
 
@@ -65,10 +70,12 @@
         var index = _.findIndex(vm.users, {id: userId});
         if (index > -1)
           vm.users.splice(index, 1);
+
+        vm.successfulRequest = true;
       }
 
       function userError(error) {
-
+        vm.successfulRequest = false;
       }
     }
 

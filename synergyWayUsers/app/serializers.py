@@ -20,7 +20,7 @@ class UserSerializer(object):
                 'course_id': obj['course_id'],
                 'name': obj['course_name'],
                 'code': obj['course_code']
-            } for obj in self.data
+            } for obj in self.data if obj['course_id']
         ]
 
         return result
@@ -31,6 +31,12 @@ class UserSerializer(object):
         Formats list of objects.
         :return: JSON. Formatted data.
         """
+        if not self.data:
+            return {
+                'count': 0,
+                'data': []
+            }
+
         single_user = self.data[0]
 
         return {

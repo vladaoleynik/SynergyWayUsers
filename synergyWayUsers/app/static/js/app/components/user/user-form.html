@@ -9,9 +9,10 @@
              autofocus
              required
              ng-disabled="vm.inEditView"
+             ng-pattern="/^[a-zA-Z]*$/"
              class="form-control rounded-input"
              id="userName"
-             maxlength="50">
+             maxlength="100">
         <i class="glyphicon glyphicon-exclamation-sign form-control-feedback"></i>
 
         <div class="form-messages"
@@ -19,6 +20,7 @@
              ng-messages="userForm.name.$error"
              role="alert">
             <div ng-message="required">This field is required.</div>
+            <div ng-message="pattern">Please provide a valid name with chars only.</div>
         </div>
     </div><!-- /.validated-field -->
 </div><!-- /.form-group -->
@@ -31,6 +33,7 @@
            name="email"
            ng-model="vm.model.email"
            required
+           maxlength="80"
            class="form-control rounded-input"
            id="userEmail">
         <div class="form-messages"

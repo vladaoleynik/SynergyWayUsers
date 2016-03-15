@@ -90,6 +90,11 @@ body {
     font-family: 'Open Sans', 'SansSerif';
 }
 
+body[ng-cloak],
+body.ng-cloak {
+    display: none;
+}
+
 :focus,
 a:focus,
 .btn.active.focus,
@@ -129,6 +134,10 @@ a:focus,
     height: 4.3rem;
     left: 50%;
     transform: translateX(-50%);
+}
+
+.user-list-block .text-alert {
+    margin-bottom: 2rem;
 }
 
 .user-header {

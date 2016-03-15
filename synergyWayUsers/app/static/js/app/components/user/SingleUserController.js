@@ -6,7 +6,8 @@
     .controller('SingleUserController', SingleUserController);
 
   SingleUserController.$inject = [
-    '$stateParams', '_', 'userService', 'courseService', '$state', '$timeout'
+    '$stateParams', '_', 'userService', 'courseService', '$state', '$timeout',
+    '$anchorScroll'
   ];
 
   function SingleUserController(
@@ -15,12 +16,13 @@
     userService,
     courseService,
     $state,
-    $timeout
+    $timeout,
+    $anchorScroll
   ) {
     var vm = this;
 
     vm.model = {
-      status: 1
+      status: 0
     };
     vm.inEditView = true;
     vm.successfulRequest = undefined;
@@ -144,6 +146,7 @@
         }
 
         vm.successfulRequest = true;
+        $anchorScroll(0);
         $timeout(function () {
           $state.go('user-list');
         }, 3000)
@@ -172,6 +175,7 @@
         }
 
         vm.successfulRequest = true;
+        $anchorScroll(0);
         $timeout(function () {
           $state.go('user-list');
         }, 3000)

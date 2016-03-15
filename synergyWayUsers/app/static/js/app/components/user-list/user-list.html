@@ -8,7 +8,7 @@
                         <i class="glyphicon glyphicon-plus"></i>
                     </a>
                     <form class="inline-block search-form"
-                        ng-submit="vm.loadPaginatedUsers()">
+                        ng-submit="vm.search && vm.loadPaginatedUsers()">
                         <button class="btn inline-block btn-circle btn-md splitted-btn btn-green" type="submit">
                             <i class="glyphicon glyphicon-search"></i>
                         </button>
@@ -37,6 +37,10 @@
         </div>
     </div><!-- /.row -->
     <div class="container">
+        <span class="text-alert alert-danger center-block"
+            ng-if="vm.successfulRequest == false;">
+            Oops...something went wrong.
+        </span>
         <div class="user-list" ng-show="vm.users.length">
             <div class="table-responsive">
                 <table class="table dark-table">
