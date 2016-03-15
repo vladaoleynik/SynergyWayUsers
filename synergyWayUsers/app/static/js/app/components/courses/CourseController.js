@@ -25,11 +25,17 @@
         .catch(courseError);
 
       function courseSuccess(response) {
+        if (response.status == 'error') {
+          courseError();
+          return;
+        }
+
         vm.courses = response;
+        vm.successfulRequest = true;
       }
 
       function courseError() {
-
+        vm.successfulRequest = false;
       }
     }
 

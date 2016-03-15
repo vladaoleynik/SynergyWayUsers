@@ -1,5 +1,9 @@
 <div class="container courses-block">
     <h2 class="title text-uppercase text-center">Courses</h2>
+    <span class="text-alert alert-danger" ng-show="vm.successfulRequest == false">
+        Oops...Something went wrong.
+    </span>
+
     <table class="table dark-table" ng-show="vm.courses.length">
         <thead>
             <tr>

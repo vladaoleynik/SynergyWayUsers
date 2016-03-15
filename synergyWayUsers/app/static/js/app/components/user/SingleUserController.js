@@ -155,6 +155,11 @@
 
       function userError() {
         vm.successfulRequest = false;
+        $anchorScroll(0);
+
+        $timeout(function () {
+          vm.successfulRequest = undefined;
+        }, 3000)
       }
     }
 
@@ -184,6 +189,11 @@
 
       function userError() {
         vm.successfulRequest = false;
+        $anchorScroll(0);
+
+        $timeout(function () {
+          vm.successfulRequest = undefined;
+        }, 3000)
       }
     }
 

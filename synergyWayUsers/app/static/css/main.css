@@ -136,7 +136,8 @@ a:focus,
     transform: translateX(-50%);
 }
 
-.user-list-block .text-alert {
+.user-list-block .text-alert,
+.courses-block .text-alert {
     margin-bottom: 2rem;
 }
 
