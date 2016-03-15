@@ -6,17 +6,14 @@ from flask.views import MethodView
 from . import models, serializers, app
 
 
+@app.errorhandler(500)
 @app.errorhandler(404)
 def not_found(error):
     return make_response(
-        jsonify({'error': 'Not found'}), 404
-    )
-
-
-@app.errorhandler(500)
-def not_found(error):
-    return make_response(
-        jsonify({'error': 'Internal error'}), 500
+        jsonify({
+            'status': 'error',
+            'error': 'Not found'
+        }), 404
     )
 
 
@@ -48,22 +45,37 @@ class UserAPI(MethodView):
         if not request.json:
             abort(400)
 
-        updated_user = self.user_model.update_object(user_id, request.json)
-        if not updated_user:
+        updated = self.user_model.update_object(user_id, request.json)
+        if not updated:
             abort(500)
 
-        return jsonify(updated_user)
+        return jsonify({
+            'status': 'success'
+        })
 
     def delete(self, user_id):
         if not user_id:
             abort(404)
 
-        delete_status = self.user_model.delete_object(user_id)
-        if not delete_status:
+        deleted_rows = self.user_model.delete_object(user_id)
+        if not deleted_rows:
             abort(500)
 
-        print delete_status
-        return jsonify(delete_status)
+        return jsonify({
+            'status': 'success'
+        })
+
+    def post(self):
+        if not request.json:
+            abort(400)
+
+        created = self.user_model.create_object(request.json)
+        if not created:
+            abort(500)
+
+        return jsonify({
+            'status': 'success'
+        }), 201
 
 
 class CourseAPI(MethodView):
@@ -82,7 +94,7 @@ class CourseAPI(MethodView):
 user_view = UserAPI.as_view('user_api')
 app.add_url_rule('/api/users',
                  view_func=user_view,
-                 methods=['GET'])
+                 methods=['GET', 'POST'])
 app.add_url_rule('/api/users/<int:user_id>',
                  view_func=user_view,
                  methods=['GET', 'PUT', 'DELETE'])

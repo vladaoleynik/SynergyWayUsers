@@ -8,18 +8,18 @@ logger = logging.getLogger(__name__)
 
 
 class BaseModel(object):
-    __all_proc_name__ = None
-    __one_proc_name__ = None
-    __paginated__ = True
+    _all_proc_name = None
+    _one_proc_name = None
+    _paginated = True
 
     def get_all(self, *args, **kwargs):
-        if self.__all_proc_name__ is None:
-            raise NotImplementedError('__all_proc_name__ must be overriden!')
+        if self._all_proc_name is None:
+            raise NotImplementedError('_all_proc_name must be overriden!')
 
         cursor = connection.get_cursor()
 
         try:
-            cursor.callproc(self.__all_proc_name__, list(args))
+            cursor.callproc(self._all_proc_name, list(args))
         except (InternalError, DatabaseError):
             connection.db_connection.rollback()
             return None
@@ -29,13 +29,13 @@ class BaseModel(object):
         return records
 
     def get_object(self, id):
-        if self.__one_proc_name__ is None:
-            raise NotImplementedError('__one_proc_name__ must be overriden!')
+        if self._one_proc_name is None:
+            raise NotImplementedError('_one_proc_name must be overriden!')
 
         cursor = connection.get_cursor()
 
         try:
-            cursor.callproc(self.__one_proc_name__, [id])
+            cursor.callproc(self._one_proc_name, [id])
         except (InternalError, DatabaseError):
             connection.db_connection.rollback()
             return None
@@ -46,8 +46,8 @@ class BaseModel(object):
 
 
 class UserModel(BaseModel):
-    __all_proc_name__ = 'public.fn_getuserdata'
-    __one_proc_name__ = 'public.fn_getuserbyid'
+    _all_proc_name = 'public.fn_getuserdata'
+    _one_proc_name = 'public.fn_getuserbyid'
 
     def update_object(self, id, data):
         if not id:
@@ -71,9 +71,9 @@ class UserModel(BaseModel):
             connection.db_connection.rollback()
             return None
 
-        records = cursor.fetchone()
+        status = cursor.fetchone()
 
-        return records
+        return status.get('fn_updateuser', False)
 
     def delete_object(self, id):
         if not id:
@@ -87,10 +87,32 @@ class UserModel(BaseModel):
             connection.db_connection.rollback()
             return None
 
+        affected_row = cursor.fetchone()
+
+        return affected_row.get('fn_deleteuser', 0)
+
+    def create_object(self, data):
+        cursor = connection.get_cursor()
+
+        try:
+            cursor.callproc(
+                "public.fn_createuser", [
+                    data.get('name'),
+                    data.get('email'),
+                    data.get('mobile'),
+                    data.get('phone'),
+                    data.get('status'),
+                    data.get('course_ids')
+                ]
+            )
+        except (InternalError, DatabaseError):
+            connection.db_connection.rollback()
+            return None
+
         status = cursor.fetchone()
 
-        return status
+        return status.get('fn_createuser', False)
 
 
 class CourseModel(BaseModel):
-    __all_proc_name__ = 'public.fn_getcoursedata'
+    _all_proc_name = 'public.fn_getcoursedata'
