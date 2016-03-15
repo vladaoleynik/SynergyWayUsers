@@ -1,4 +1,5 @@
 import logging
+from psycopg2._psycopg import DatabaseError, InternalError
 
 from .db import connection
 
@@ -17,7 +18,11 @@ class BaseModel(object):
 
         cursor = connection.get_cursor()
 
-        cursor.callproc(self.__all_proc_name__, list(args))
+        try:
+            cursor.callproc(self.__all_proc_name__, list(args))
+        except (InternalError, DatabaseError):
+            connection.db_connection.rollback()
+            return None
 
         records = cursor.fetchall()
 
@@ -29,7 +34,11 @@ class BaseModel(object):
 
         cursor = connection.get_cursor()
 
-        cursor.callproc(self.__one_proc_name__, [id])
+        try:
+            cursor.callproc(self.__one_proc_name__, [id])
+        except (InternalError, DatabaseError):
+            connection.db_connection.rollback()
+            return None
 
         records = cursor.fetchall()
 
@@ -39,6 +48,32 @@ class BaseModel(object):
 class UserModel(BaseModel):
     __all_proc_name__ = 'public.fn_getuserdata'
     __one_proc_name__ = 'public.fn_getuserbyid'
+
+    def update_object(self, id, data):
+        if not id:
+            return
+
+        cursor = connection.get_cursor()
+
+        try:
+            cursor.callproc(
+                "public.fn_updateuser", [
+                    data.get('user_id'),
+                    data.get('name'),
+                    data.get('email'),
+                    data.get('mobile'),
+                    data.get('phone'),
+                    data.get('status'),
+                    data.get('course_ids')
+                ]
+            )
+        except (InternalError, DatabaseError):
+            connection.db_connection.rollback()
+            return None
+
+        records = cursor.fetchone()
+
+        return records
 
 
 class CourseModel(BaseModel):
