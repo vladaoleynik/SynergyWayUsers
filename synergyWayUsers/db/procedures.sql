@@ -84,10 +84,9 @@ $$
 $$
 LANGUAGE plpgsql;
 
-
 CREATE OR REPLACE FUNCTION fn_updateUserCourseData (
-       _user_id INTEGER,
-       _course_ids INTEGER[]
+  _user_id INTEGER,
+  _course_ids INTEGER[]
 ) RETURNS VOID AS
 $$
 BEGIN
@@ -139,3 +138,14 @@ BEGIN
 END;
 $$
 LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION fn_deleteUser (
+  _user_id INTEGER
+) RETURNS VOID AS
+$$
+BEGIN
+  DELETE FROM "user"
+    WHERE "user".user_id = _user_id;
+END;
+$$
+LANGUAGE plpgsql SECURITY DEFINER;
