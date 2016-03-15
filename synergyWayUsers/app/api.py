@@ -4,6 +4,7 @@ from flask import json, abort, request, make_response, jsonify
 from flask.views import MethodView
 
 from . import models, serializers, app
+from .models import ModelError
 
 
 @app.errorhandler(500)
@@ -27,12 +28,24 @@ class UserAPI(MethodView):
         search_str = request.args.get('search_str')
 
         if user_id is None:
-            users = self.user_model.get_all(
-                page=page, number=number, search_str=search_str
-            )
+            # Need to retrieve all users from DB
+            users = []
+
+            try:
+                users = self.user_model.get_all(
+                    page=page, number=number, search_str=search_str
+                )
+            except (ModelError, DatabaseError, InternalError):
+                abort(500)
+
             return json.dumps(users)
 
-        user = self.user_model.get_object(user_id)
+        user = None
+        try:
+            user = self.user_model.get_object(user_id)
+        except (ModelError, DatabaseError, InternalError):
+            abort(500)
+
         if not user:
             abort(404)
 
@@ -48,7 +61,12 @@ class UserAPI(MethodView):
         if not request.json:
             abort(400)
 
-        updated = self.user_model.update_object(user_id, request.json)
+        updated = None
+        try:
+            updated = self.user_model.update_object(user_id, request.json)
+        except (ModelError, DatabaseError, InternalError):
+            abort(500)
+
         if not updated:
             abort(500)
 
@@ -60,7 +78,12 @@ class UserAPI(MethodView):
         if not user_id:
             abort(404)
 
-        deleted_rows = self.user_model.delete_object(user_id)
+        deleted_rows = None
+        try:
+            deleted_rows = self.user_model.delete_object(user_id)
+        except (ModelError, DatabaseError, InternalError):
+            abort(500)
+
         if not deleted_rows:
             abort(500)
 
@@ -72,7 +95,12 @@ class UserAPI(MethodView):
         if not request.json:
             abort(400)
 
-        created = self.user_model.create_object(request.json)
+        created = None
+        try:
+            created = self.user_model.create_object(request.json)
+        except (ModelError, DatabaseError, InternalError):
+            abort(500)
+
         if not created:
             abort(500)
 
@@ -86,7 +114,12 @@ class CourseAPI(MethodView):
         self.course_model = models.CourseModel()
 
     def get(self):
-        courses = self.course_model.get_all()
+        courses = []
+        try:
+            courses = self.course_model.get_all()
+        except (ModelError, DatabaseError, InternalError):
+            abort(500)
+
         if not courses:
             abort(500)
 

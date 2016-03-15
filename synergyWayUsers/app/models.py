@@ -7,6 +7,13 @@ from .db import connection
 logger = logging.getLogger(__name__)
 
 
+class ModelError(Exception):
+    def __init__(self, message, model):
+        super(ModelError, self).__init__(message)
+
+        self.model = model
+
+
 class BaseModel(object):
     _all_proc_name = None
     _one_proc_name = None
@@ -26,7 +33,7 @@ class BaseModel(object):
             cursor.callproc(self._all_proc_name, args)
         except (InternalError, DatabaseError):
             connection.db_connection.rollback()
-            return None
+            raise
 
         records = cursor.fetchall()
 
@@ -42,7 +49,7 @@ class BaseModel(object):
             cursor.callproc(self._one_proc_name, [id])
         except (InternalError, DatabaseError):
             connection.db_connection.rollback()
-            return None
+            raise
 
         records = cursor.fetchall()
 
@@ -55,7 +62,7 @@ class UserModel(BaseModel):
 
     def update_object(self, id, data):
         if not id:
-            return
+            raise ModelError('Provide object id.', UserModel)
 
         cursor = connection.get_cursor()
 
@@ -73,7 +80,7 @@ class UserModel(BaseModel):
             )
         except (InternalError, DatabaseError):
             connection.db_connection.rollback()
-            return None
+            raise
 
         status = cursor.fetchone()
 
@@ -81,7 +88,7 @@ class UserModel(BaseModel):
 
     def delete_object(self, id):
         if not id:
-            return
+            raise ModelError('Provide object id.', UserModel)
 
         cursor = connection.get_cursor()
 
@@ -89,7 +96,7 @@ class UserModel(BaseModel):
             cursor.callproc("public.fn_deleteuser", [id])
         except (InternalError, DatabaseError):
             connection.db_connection.rollback()
-            return None
+            raise
 
         affected_row = cursor.fetchone()
 
@@ -111,7 +118,7 @@ class UserModel(BaseModel):
             )
         except (InternalError, DatabaseError):
             connection.db_connection.rollback()
-            return None
+            raise
 
         status = cursor.fetchone()
 
