@@ -4,6 +4,8 @@ import psycopg2.extras
 
 from flask import current_app
 
+from . import app
+
 logger = logging.getLogger(__name__)
 
 
@@ -30,9 +32,9 @@ class Connection(object):
                 host=current_app.config['DB_HOST'],
                 port=current_app.config['DB_PORT']
             )
-            logger.debug('Opened database successfully.')
+            app.logger.info('Opened database successfully.')
         except psycopg2.DatabaseError as e:
-            logger.debug('Error {0}.'.format(e))
+            app.logger.info('Error {0}.'.format(e))
             return
 
 
