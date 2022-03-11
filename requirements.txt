@@ -3,7 +3,7 @@ Flask==0.10.1
 Jinja2==2.8
 MarkupSafe==0.23
 PAM==0.4.2
-Pillow==2.9.0
+Pillow==9.0.1
 PyJWT==1.0.0
 Twisted-Core==15.2.1
 Twisted-Web==15.2.1
