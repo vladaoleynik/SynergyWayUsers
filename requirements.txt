@@ -24,7 +24,7 @@ dirspec==13.10
 duplicity==0.7.2
 enum34==1.0.4
 gyp==0.1
-html5lib==0.999
+html5lib==0.999999999
 httplib2==0.9
 idna==2.0
 ipaddress==1.0.14
